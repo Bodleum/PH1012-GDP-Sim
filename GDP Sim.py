@@ -29,6 +29,7 @@ h_est=(v0**2*np.sin(radangle)**2)/(2*gravity)
 #Impulse list
 implist=[]
 
+
 class Ball:
     def __init__(self,x0,y0):
 
@@ -81,10 +82,15 @@ class Impulse:
     def __init__(self,form):
         implist.append(self)
         self.id=implist.index(self)
+        self.force=0
         self.form=form
 
-    # def update(self):
-        # update function
+    def update(self,x):
+        #Impulse forms
+        if self.form == "parabolic":
+            self.force = 2000*x-10000*x**2
+        else:
+            print("Not a valid impulse form")
 
 golf=Ball(0,0)
 
