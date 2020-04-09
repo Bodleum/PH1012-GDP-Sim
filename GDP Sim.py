@@ -26,6 +26,10 @@ r_est=(v0**2*np.sin(2*radangle))/gravity
 
 #Height extimate
 h_est=(v0**2*np.sin(radangle)**2)/(2*gravity)
+
+#Impulse list
+implist=[]
+
 class Ball:
     def __init__(self,x0,y0):
 
@@ -52,6 +56,10 @@ class Ball:
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
         self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
+        #Forces
+        self.xforces={}
+        self.yforces={}
+
     def update(self,t):
 
         #x
@@ -67,6 +75,16 @@ class Ball:
         #Air resistance
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
         self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
+
+
+class Impulse:
+
+    def __init__(self,form):
+        self.form=form
+
+    # def update(self):
+        # update function
+
 
 
 golf=Ball(0,0)
