@@ -75,6 +75,3 @@ def animation_frame(i):
 
 animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=10)
 plt.show()
-
-
-#Branching test
