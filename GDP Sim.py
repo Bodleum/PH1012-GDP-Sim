@@ -18,7 +18,6 @@ dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax=(2*v0*np.sin(radangle)/gravity)
-print(tmax)
 tstep=0.1
 
 #Range estimate
@@ -81,12 +80,11 @@ class Impulse:
 
     def __init__(self,form):
         implist.append(self)
+        self.id=implist.index(self)
         self.form=form
 
     # def update(self):
         # update function
-
-
 
 golf=Ball(0,0)
 
