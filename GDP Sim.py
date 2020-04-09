@@ -13,6 +13,9 @@ radangle=(degangle*np.pi)/180
 ux=v0*np.cos(radangle)
 uy=v0*np.sin(radangle)
 
+#Drag Coefficient
+dragcoef=float(input("Drag coefficient? --> "))
+
 #Time
 tmax=(2*v0*np.sin(radangle)/gravity)
 print(tmax)
@@ -45,7 +48,7 @@ class Ball:
         self.y=y0
 
         #Air resistance
-        self.drag=0
+        self.drag=dragcoef
         self.airres=self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
 
     def update(self,t):
