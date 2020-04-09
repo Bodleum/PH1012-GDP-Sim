@@ -2,12 +2,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+#Constants
 gravity=9.81
 airdens = 1.2041  # from Wikipedia -> temporary
-tmax=float(input("Maximum time? --> "))
-tstep=0.025
-ux=10
-uy=15
+
+#Initial conditions
+v0=float(input("Initial v? --> "))
+degangle=float(input("Angle? --> "))
+radangle=(degangle*np.pi)/180
+ux=v0*np.cos(radangle)
+uy=v0*np.sin(radangle)
+
+#Time
+tmax=(2*v0*np.sin(radangle)/gravity)
+print(tmax)
+tstep=0.01
+
+#Range estimate
+r_est=(v0**2*np.sin(2*radangle))/gravity
+
+#Height extimate
+h_est=(v0**2*np.sin(radangle)**2)/(2*gravity)
 class Ball:
     def __init__(self,x0,y0):
 
@@ -55,8 +70,8 @@ x_data=[]
 y_data=[]
 
 fig, ax=plt.subplots()
-ax.set_xlim(-10,tmax+0.05*tmax)
-ax.set_ylim(-20,20)
+ax.set_xlim(-2,1.1*r_est+5)
+ax.set_ylim(-2,1.1*h_est+5)
 line, =ax.plot(0,0)
 
 def animation_frame(i):
