@@ -49,7 +49,8 @@ class Ball:
 
         #Air resistance
         self.drag=dragcoef
-        self.airres=self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresx=self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresy = self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
     def update(self,t):
 
@@ -64,7 +65,8 @@ class Ball:
         self.y=0.5*self.ay*t**2+uy*t
 
         #Air resistance
-        self.airres = self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresx = self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresy = self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
 
 golf=Ball(0,0)
