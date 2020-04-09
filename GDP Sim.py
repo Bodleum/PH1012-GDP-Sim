@@ -14,12 +14,12 @@ ux=v0*np.cos(radangle)
 uy=v0*np.sin(radangle)
 
 #Drag Coefficient
-dragcoef=float(input("Drag coefficient? --> "))
+dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax=(2*v0*np.sin(radangle)/gravity)
 print(tmax)
-tstep=0.01
+tstep=0.1
 
 #Range estimate
 r_est=(v0**2*np.sin(2*radangle))/gravity
@@ -30,11 +30,11 @@ class Ball:
     def __init__(self,x0,y0):
 
         #Mass and weight
-        self.mass=0
-        self.weight=self.mass*gravity
+        self.mass=0.05
+        self.weight=-1*self.mass*gravity
 
         #Radius and volume
-        self.radius=0
+        self.radius=0.02
         self.volume=(4/3)*np.pi*self.radius**3
 
         #x
@@ -49,24 +49,24 @@ class Ball:
 
         #Air resistance
         self.drag=dragcoef
-        self.airresx=self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
-        self.airresy = self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
+        self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
     def update(self,t):
 
         #x
-        self.ax=0
+        self.ax = -1*(self.airresx/self.mass)
         self.vx=self.ax*t+ux
         self.x=0.5*self.ax*t**2+ux*t
 
         #y
-        self.ay=-1*gravity
+        self.ay=-1*gravity - (self.airresy/self.mass)
         self.vy=self.ay*t+uy
         self.y=0.5*self.ay*t**2+uy*t
 
         #Air resistance
-        self.airresx = self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
-        self.airresy = self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
+        self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
 
 golf=Ball(0,0)
