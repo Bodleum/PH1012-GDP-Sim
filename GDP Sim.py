@@ -5,7 +5,7 @@ from matplotlib.animation import FuncAnimation
 gravity=9.81
 airdens = 1.2041  # from Wikipedia -> temporary
 tmax=float(input("Maximum time? --> "))
-tstep=0.01
+tstep=0.025
 ux=10
 uy=15
 class Ball:
@@ -73,5 +73,5 @@ def animation_frame(i):
     line.set_ydata(y_data)
     return line,
 
-animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=10)
+animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=1)
 plt.show()
