@@ -80,6 +80,7 @@ class Ball:
 class Impulse:
 
     def __init__(self,form):
+        implist.append(self)
         self.form=form
 
     # def update(self):
