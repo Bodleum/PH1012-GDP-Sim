@@ -1,7 +1,7 @@
 instructions on how to run model
+rework
 ground
-forces
-air resistance
+forces and impulse
 wind
 spin
 non point mass gold ball
