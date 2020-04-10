@@ -35,17 +35,17 @@ class Ball:
     def setvel(self, velocity):
         self.vel = velocity
 
-    def update(self, t):
+    def update(self, tstep):
 
         #x
         self.ax = (self.airresx/self.mass)
-        self.vel.x += self.ax
-        self.x += self.vel.x
+        self.vel.x += self.ax*tstep
+        self.x += self.vel.x*tstep
 
         #y
         self.ay = -1*gravity + (self.airresy/self.mass)
-        self.vel.y += self.ay
-        self.y += self.vel.y
+        self.vel.y += self.ay*tstep
+        self.y += self.vel.y*tstep
 
         #Air resistance
         self.airresx = -1*airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2
