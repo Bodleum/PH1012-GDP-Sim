@@ -35,7 +35,7 @@ ax.set_xlim(-2,1.1*r_est+5)
 ax.set_ylim(-10,1.1*h_est+5)
 line, =ax.plot(0,0)
 
-def animation_frame(i):
+def animation_frame():
     
     x_data.append(golf.x)  # Append to graph data
     y_data.append(golf.y)  # Append to graph data
@@ -44,7 +44,7 @@ def animation_frame(i):
     line.set_ydata(y_data)  # Add to line
 
     #Update golf
-    golf.update(i)
+    golf.update(tstep)
     return line,
 
 animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=1)
