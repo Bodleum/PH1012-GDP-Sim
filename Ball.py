@@ -1,6 +1,7 @@
 import numpy as np
 
-from GDP_Sim import gravity,airdens,vinit,x_data,y_data
+from GDP_Sim import vinit,x_data,y_data
+from data.constants import *
 
 class Ball:
     def __init__(self, x0, y0,dragcoef):

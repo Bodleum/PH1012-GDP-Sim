@@ -4,10 +4,7 @@ from matplotlib.animation import FuncAnimation
 
 from Velocity import *
 from Ball import Ball
-
-#Constants
-gravity = 9.81
-airdens = 1.2041  # from Wikipedia -> temporary
+from data.constants import gravity
 
 #Initial conditions
 v0=float(input("Initial v? --> "))
