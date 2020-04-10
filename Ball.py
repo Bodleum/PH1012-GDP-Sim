@@ -1,7 +1,10 @@
 import numpy as np
 
-from GDP_Sim import vinit,x_data,y_data
 from data.constants import *
+
+#Graph data
+x_data = []
+y_data = []
 
 class Ball:
     def __init__(self, x0, y0,dragcoef):
@@ -15,20 +18,22 @@ class Ball:
         self.volume = (4/3)*np.pi*self.radius**3
 
         #x
-        self.ax = None
+        self.ax = 0
         self.x = x0
 
         #y
-        self.ay = None
+        self.ay = 0
         self.y = y0
 
-        #Initial velocity
-        self.vel=vinit
+        self.vel = 0
 
         #Air resistance
         self.drag = dragcoef
-        self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vel.x**2
-        self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vel.y**2
+        self.airresx = 0
+        self.airresy = 0
+
+    def setvel(self, velocity):
+        self.vel = velocity
 
     def update(self, t):
 
@@ -36,13 +41,11 @@ class Ball:
         self.ax = (self.airresx/self.mass)
         self.vel.x += self.ax
         self.x += self.vel.x
-        x_data.append(self.x)  # Append to graph data
 
         #y
         self.ay = -1*gravity + (self.airresy/self.mass)
         self.vel.y += self.ay
         self.y += self.vel.y
-        y_data.append(self.y)  # Append to graph data
 
         #Air resistance
         self.airresx = -1*airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2
