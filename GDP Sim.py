@@ -64,11 +64,15 @@ class Ball:
         self.ax = -1*(self.airresx/self.mass)
         self.vx=self.ax*t+self.ux
         self.x=0.5*self.ax*t**2+self.ux*t
+        x_data.append(golf.x) #Append to graph data
+        line.set_xdata(x_data) #Add to line
 
         #y
         self.ay=-1*gravity - (self.airresy/self.mass)
         self.vy=self.ay*t+self.uy
         self.y=0.5*self.ay*t**2+self.uy*t
+        y_data.append(golf.y) #Append to graph data
+        line.set_ydata(y_data) #Add to line
 
         #Air resistance
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
@@ -87,13 +91,6 @@ def animation_frame(i):
     #Update golf
     golf.update(i)
 
-    #Append to x_data and y_data
-    x_data.append(golf.x)
-    y_data.append(golf.y)
-
-    #Add to line
-    line.set_xdata(x_data)
-    line.set_ydata(y_data)
     return line,
 
 animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=1)
