@@ -61,23 +61,36 @@ class Ball:
     def update(self,t):
 
         #x
-        self.ax = -1*(self.airresx/self.mass)
+        self.ax = (self.airresx/self.mass)
         self.vx=self.ax*t+self.ux
         self.x=0.5*self.ax*t**2+self.ux*t
         x_data.append(golf.x) #Append to graph data
         line.set_xdata(x_data) #Add to line
 
         #y
-        self.ay=-1*gravity - (self.airresy/self.mass)
+        self.ay=-1*gravity + (self.airresy/self.mass)
         self.vy=self.ay*t+self.uy
         self.y=0.5*self.ay*t**2+self.uy*t
         y_data.append(golf.y) #Append to graph data
         line.set_ydata(y_data) #Add to line
 
         #Air resistance
-        self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
-        self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
+        self.airresx = -1*airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
+        self.airresy = -1*airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
+        #Set ux and uy for next update
+        # self.ux=self.vx
+        # self.uy=self.vy
+
+
+class Velocity:
+
+    def __init__(self,mag,degangle):
+        self.mag=mag
+        self.degangle=degangle
+        self.radangle=(degangle*np.pi)/180
+        self.x=self.mag*np.cos(radangle)
+        self.y=self.mag*np.sin(radangle)
 
 golf=Ball(0,0)
 
@@ -90,7 +103,6 @@ def animation_frame(i):
 
     #Update golf
     golf.update(i)
-
     return line,
 
 animation = FuncAnimation(fig,func=animation_frame,frames=np.arange(0,tmax,tstep),interval=1)
