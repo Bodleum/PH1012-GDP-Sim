@@ -15,7 +15,7 @@ dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax=(2*vinit.y/gravity)
-tstep=0.001
+tstep=0.1
 
 #Range estimate
 r_est=(vinit.x)*tmax
@@ -35,7 +35,7 @@ ax.set_xlim(-2,1.1*r_est+5)
 ax.set_ylim(-10,1.1*h_est+5)
 line, =ax.plot(0,0)
 
-def animation_frame():
+def animation_frame(_):
     
     x_data.append(golf.x)  # Append to graph data
     y_data.append(golf.y)  # Append to graph data
