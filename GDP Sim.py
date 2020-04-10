@@ -10,15 +10,12 @@ airdens = 1.2041  # from Wikipedia -> temporary
 v0=float(input("Initial v? --> "))
 degangle=float(input("Angle? --> "))
 radangle=(degangle*np.pi)/180
-ux=v0*np.cos(radangle)
-uy=v0*np.sin(radangle)
 
 #Drag Coefficient
 dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax=(2*v0*np.sin(radangle)/gravity)
-print(tmax)
 tstep=0.1
 
 #Range estimate
@@ -26,6 +23,11 @@ r_est=(v0**2*np.sin(2*radangle))/gravity
 
 #Height extimate
 h_est=(v0**2*np.sin(radangle)**2)/(2*gravity)
+
+#Graph data
+x_data=[]
+y_data=[]
+
 class Ball:
     def __init__(self,x0,y0):
 
@@ -47,6 +49,10 @@ class Ball:
         self.vy=0
         self.y=y0
 
+        #Initial velocities
+        self.ux = v0*np.cos(radangle)
+        self.uy = v0*np.sin(radangle)
+
         #Air resistance
         self.drag=dragcoef
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
@@ -56,13 +62,13 @@ class Ball:
 
         #x
         self.ax = -1*(self.airresx/self.mass)
-        self.vx=self.ax*t+ux
-        self.x=0.5*self.ax*t**2+ux*t
+        self.vx=self.ax*t+self.ux
+        self.x=0.5*self.ax*t**2+self.ux*t
 
         #y
         self.ay=-1*gravity - (self.airresy/self.mass)
-        self.vy=self.ay*t+uy
-        self.y=0.5*self.ay*t**2+uy*t
+        self.vy=self.ay*t+self.uy
+        self.y=0.5*self.ay*t**2+self.uy*t
 
         #Air resistance
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
@@ -70,9 +76,6 @@ class Ball:
 
 
 golf=Ball(0,0)
-
-x_data=[]
-y_data=[]
 
 fig, ax=plt.subplots()
 ax.set_xlim(-2,1.1*r_est+5)
