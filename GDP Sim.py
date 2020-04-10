@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+from Velocity import *
 #Constants
 gravity=9.81
 airdens = 1.2041  # from Wikipedia -> temporary
@@ -10,6 +11,7 @@ airdens = 1.2041  # from Wikipedia -> temporary
 v0=float(input("Initial v? --> "))
 degangle=float(input("Angle? --> "))
 radangle=(degangle*np.pi)/180
+vinit=Velocity(v0,degangle)
 
 #Drag Coefficient
 dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
@@ -32,29 +34,29 @@ class Ball:
     def __init__(self,x0,y0):
 
         #Mass and weight
-        self.mass=0.05
-        self.weight=-1*self.mass*gravity
+        self.mass = 0.05
+        self.weight = -1*self.mass*gravity
 
         #Radius and volume
-        self.radius=0.02
-        self.volume=(4/3)*np.pi*self.radius**3
+        self.radius = 0.02
+        self.volume = (4/3)*np.pi*self.radius**3
 
         #x
-        self.ax=0
-        self.vx=0
-        self.x=x0
+        self.ax = None
+        self.vx = None
+        self.x = x0
 
         #y
-        self.ay=0
-        self.vy=0
-        self.y=y0
+        self.ay = None
+        self.vy = None
+        self.y = y0
 
         #Initial velocities
-        self.ux = v0*np.cos(radangle)
-        self.uy = v0*np.sin(radangle)
+        self.ux = vinit.x
+        self.uy = vinit.y
 
         #Air resistance
-        self.drag=dragcoef
+        self.drag = dragcoef
         self.airresx = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vx**2
         self.airresy = airdens*self.drag*0.5*(np.pi*self.radius**2)*self.vy**2
 
@@ -81,16 +83,6 @@ class Ball:
         #Set ux and uy for next update
         # self.ux=self.vx
         # self.uy=self.vy
-
-
-class Velocity:
-
-    def __init__(self,mag,degangle):
-        self.mag=mag
-        self.degangle=degangle
-        self.radangle=(degangle*np.pi)/180
-        self.x=self.mag*np.cos(radangle)
-        self.y=self.mag*np.sin(radangle)
 
 golf=Ball(0,0)
 
