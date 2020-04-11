@@ -1,6 +1,6 @@
 import numpy as np
 
-from data.graphics import *
+from data.graphics import GraphWin,color_rgb,Circle,Rectangle,Point
 
 from Ball import Ball
 from data.constants import gravity
@@ -29,3 +29,26 @@ y_data=[]
 
 golf=Ball(0,0,dragcoef)
 golf.setvel(vinit)
+
+#create golf ball
+golf_ball=Circle(Point(250,250),5)
+golf_ball.setFill(color_rgb(255,255,255))
+
+#make ground
+ground=Rectangle(Point(0,700),Point(1200,560))
+ground.setFill(color_rgb(0,255,0))
+
+def main():
+    #make window
+    window=GraphWin("Golf Simulation",1200,700)
+    window.setBackground(color_rgb(0,0,0))
+
+    #draw
+    golf_ball.draw(window)
+    ground.draw(window)
+
+    #close window
+    window.getMouse()
+    window.close()
+
+main()
