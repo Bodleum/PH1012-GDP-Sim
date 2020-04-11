@@ -36,7 +36,7 @@ ax.set_ylim(-10,1.1*h_est+5)
 line, =ax.plot(0,0)
 
 def animation_frame(_):
-    
+
     x_data.append(golf.x)  # Append to graph data
     y_data.append(golf.y)  # Append to graph data
 
