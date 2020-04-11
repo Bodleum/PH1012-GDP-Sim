@@ -1,6 +1,6 @@
 import numpy as np
 
-from data.constants import *
+import data.constants as data
 
 #Graph data
 x_data = []
@@ -11,10 +11,11 @@ class Ball:
 
         #Mass and weight
         self.mass = 0.05
-        self.weight = -1*self.mass*gravity
+        self.weight = -1*self.mass*data.gravity
 
         #Radius and volume
-        self.radius = 5 #NOT IN METERS
+        self.radius = 0.02 
+        self.vradius=self.radius*data.radius_scale#NOT IN METERS
         self.volume = (4/3)*np.pi*self.radius**3
 
         #x
@@ -23,7 +24,7 @@ class Ball:
 
         #y
         self.ay = 0
-        self.y = y0
+        self.y = y0 + 560
 
         self.vel = 0
 
@@ -38,20 +39,21 @@ class Ball:
     def update(self, tstep):
 
         #x
-        self.ax = (self.airresx/self.mass)
+        self.ax = 0#(self.airresx/self.mass)
         self.vel.x += self.ax*tstep
         self.x += self.vel.x*tstep
         self.xinc = self.vel.x*tstep
 
         #y
-        self.ay = -1*gravity + (self.airresy/self.mass)
+        self.ay = -1*data.gravity  # + (self.airresy/self.mass)
         self.vel.y += self.ay*tstep
         self.y += self.vel.y*tstep
         self.yinc = self.vel.y*tstep
 
         #Air resistance
-        self.airresx = -1*airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2
-        self.airresy = -1*airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.y**2
+        self.airresx = -1*data.airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2
+        self.airresy = -1*data.airdens*self.drag * \
+            0.5*(np.pi*self.radius**2)*self.vel.y**2
 
         #Set ux and uy for next update
         # self.ux=self.vx
