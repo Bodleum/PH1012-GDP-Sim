@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import random
 
 from data.graphics import GraphWin,color_rgb,Circle,Rectangle,Point
 
@@ -33,28 +34,39 @@ golf.setvel(vinit)
 
 #create golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
-golf_ball.setFill(color_rgb(255,255,255))
+golf_ball.setFill(color_rgb(240,248,255))
 
 #make ground
-ground=Rectangle(Point(0,700),Point(1200,560))
-ground.setFill(color_rgb(0,255,0))
+ground=Rectangle(Point(-10,710),Point(1210,565))
+ground.setFill(color_rgb(84,45,36))
+ground.setOutline(color_rgb(125,194,66))
+ground.setWidth(10)
+
+#make cloud
+cloud_start = random.randint(100,1000)
+cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
+cloud.setFill(color_rgb(255,255,255))
+cloud.setOutline(color_rgb(255,255,255))
 
 def main():
 
     #make window
     window=GraphWin("Golf Simulation",1200,700)
-    window.setBackground(color_rgb(0,0,0))
+    window.setBackground(color_rgb(124,185,232))
 
     #draw
     golf_ball.draw(window)
     ground.draw(window)
+    cloud.draw(window)
 
     #moving golf ball
     while (golf.y)>=(560):
-        # print(golf.y)
+        #Move cloud
+        cloud.move(0.02,(random.uniform(-0.05,0.05)))
+        
+        #Move golfball
         golf.update(tstep)
         golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
-        # time.sleep(0.01*tstep)
 
     #close window
     window.getMouse()
