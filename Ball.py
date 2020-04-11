@@ -39,13 +39,13 @@ class Ball:
     def update(self, tstep):
 
         #x
-        self.ax = 0#(self.airresx/self.mass)
+        self.ax = (self.airresx/self.mass)
         self.vel.x += self.ax*tstep
         self.x += self.vel.x*tstep
         self.xinc = self.vel.x*tstep
 
         #y
-        self.ay = -1*data.gravity  # + (self.airresy/self.mass)
+        self.ay = -1*data.gravity + (self.airresy/self.mass)
         self.vel.y += self.ay*tstep
         self.y += self.vel.y*tstep
         self.yinc = self.vel.y*tstep
