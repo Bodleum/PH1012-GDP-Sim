@@ -1,7 +1,5 @@
-instructions on how to run model
-rework
 ground
 forces and impulse
 wind
 spin
-non point mass gold ball
+non point mass golf ball
