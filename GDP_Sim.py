@@ -13,7 +13,7 @@ degangle = float(input("Angle? --> "))
 vinit = Velocity(v0,degangle)
 
 #Drag Coefficient
-dragcoef=0.47 #float(input("Drag coefficient? (roughly 0.5) --> "))
+dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax = (2*vinit.y/data.gravity)

@@ -1,5 +1,4 @@
-ground
 forces and impulse
 wind
 spin
-non point mass golf ball
+distance markers
