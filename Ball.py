@@ -14,7 +14,7 @@ class Ball:
         self.weight = -1*self.mass*gravity
 
         #Radius and volume
-        self.radius = 0.02
+        self.radius = 5 #NOT IN METERS
         self.volume = (4/3)*np.pi*self.radius**3
 
         #x
@@ -41,11 +41,13 @@ class Ball:
         self.ax = (self.airresx/self.mass)
         self.vel.x += self.ax*tstep
         self.x += self.vel.x*tstep
+        self.xinc = self.vel.x*tstep
 
         #y
         self.ay = -1*gravity + (self.airresy/self.mass)
         self.vel.y += self.ay*tstep
         self.y += self.vel.y*tstep
+        self.yinc = self.vel.y*tstep
 
         #Air resistance
         self.airresx = -1*airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2

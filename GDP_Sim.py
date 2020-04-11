@@ -27,11 +27,11 @@ h_est=(vinit.y**2)/(2*gravity)
 x_data=[]
 y_data=[]
 
-golf=Ball(0,0,dragcoef)
+golf=Ball(10,560,dragcoef)
 golf.setvel(vinit)
 
 #create golf ball
-golf_ball=Circle(Point(250,250),5)
+golf_ball=Circle(Point(golf.x+golf.radius,golf.y-golf.radius),golf.radius)
 golf_ball.setFill(color_rgb(255,255,255))
 
 #make ground
