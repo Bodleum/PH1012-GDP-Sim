@@ -5,3 +5,5 @@ distance_scale=4
 ground_height=140
 window_x=1200
 window_y=700
+golf_ball_mass = 0.05
+golf_ball_radius = 0.02
