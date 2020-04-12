@@ -33,13 +33,13 @@ golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
 golf_ball.setFill(color_rgb(240,248,255))
 
 #Make ground
-ground=Rectangle(Point(-10,710),Point(1210,565))
+ground=Rectangle(Point(-10,(data.window_y+10)),Point((data.window_x+10),(data.distance_scale*data.ground_height+5)))
 ground.setFill(color_rgb(84,45,36))
 ground.setOutline(color_rgb(125,194,66))
 ground.setWidth(10)
 
 #Make cloud
-cloud_start = random.randint(100,1000)
+cloud_start = random.randint(100,0.8*data.window_x)
 cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
 cloud.setFill(color_rgb(255,255,255))
 cloud.setOutline(color_rgb(255,255,255))
@@ -47,7 +47,7 @@ cloud.setOutline(color_rgb(255,255,255))
 def main():
 
     #make window
-    window=GraphWin("Golf Simulation",1200,700)
+    window=GraphWin("Golf Simulation",data.window_x,data.window_y)
     window.setBackground(color_rgb(124,185,232))
 
     #draw
@@ -56,7 +56,7 @@ def main():
     cloud.draw(window)
 
     #Moving
-    while (golf.y)>=(560):
+    while (golf.y)>=(data.distance_scale*data.ground_height):
         #Move cloud
         cloud.move(0.02,(random.uniform(-0.05,0.05)))
         
