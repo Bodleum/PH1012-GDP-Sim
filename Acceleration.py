@@ -1,6 +1,7 @@
 import numpy as np
 
 class Acceleration:
+    
     def __init__(self,mag,degangle):
         self.mag = mag
         self.degangle = degangle

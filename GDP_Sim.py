@@ -8,6 +8,10 @@ from Ball import Ball
 import data.constants as data
 from Velocity import Velocity
 
+#List of objects in display
+disp_obj=[]
+scroll_vel=0
+
 #Initial velocity
 v0 = float(input("Initial v? --> "))
 degangle = float(input("Angle? --> "))
@@ -32,17 +36,22 @@ golf.setvel(vinit)
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
 golf_ball.setFill(color_rgb(240,248,255))
 golf_ball.setWidth(0)
+# Not in disp_obj
 
 #Make tee
 tee = Image(Point(7.5, data.ground_height-1), "./graphics/tee.png")
+disp_obj.append(tee)
 tee_text = Text(Point(12, data.ground_height+40), "0m")
 tee_text.setFill(color_rgb(255,255,255))
+disp_obj.append(tee_text)
+
 
 #Make ground
 grounds=[]
-for i in np.arange(25,1200,50):
+for i in np.arange(25,2500,50):
     ground_i=Image(Point(i,data.ground_height+40),"./graphics/grass.png")
     grounds.append(ground_i)
+    disp_obj.append(ground_i)
 
 #Make cloud
 clouds=[]
@@ -51,15 +60,18 @@ for i in range(0,random.randint(1,2)):
     cloud_start_y = random.randint(0,300)
     cloud_i = Image(Point(cloud_start_x, cloud_start_y),"./graphics/cloud_"+str(random.randint(1,11))+".png")
     clouds.append(cloud_i)
+    disp_obj.append(cloud_i)
 
 #Flags
 flags=[]
-for i in np.arange(50,int(data.window_x/data.distance_scale),50):
+for i in np.arange(50,int(2500/data.distance_scale),50):
     flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
     text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
     flags.append(flag_i)
     flags.append(text_i)
+    disp_obj.append(flag_i)
+    disp_obj.append(text_i)
 
 #Range text
 range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
@@ -75,7 +87,14 @@ def main_loop():
         
         #Move golfball
         golf.update(tstep)
-        golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        if (golf.x*data.distance_scale) <= 1000:
+            golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        else:
+            scroll_vel=-data.distance_scale**3*golf.vel.x
+            for i in disp_obj:
+                i.move(scroll_vel*data.distance_scale*tstep,0)
+                golf_ball.move(0, -data.distance_scale*golf.yinc)
+
 
         #Update range display
         range_display.setText("Distance: "+str(int(round(golf.x-5,1)))+"m")
