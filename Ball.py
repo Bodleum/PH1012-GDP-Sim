@@ -17,7 +17,7 @@ class Ball:
         self.x = x0
 
         #y
-        self.y = y0 + (data.distance_scale*data.ground_height)
+        self.y = y0 + (data.ground_height)
 
         #Air resistance
         self.drag = dragcoef

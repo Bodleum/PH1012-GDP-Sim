@@ -953,6 +953,7 @@ class Image(GraphicsObject):
         path, name = os.path.split(filename)
         ext = name.split(".")[-1]
         self.img.write( filename, format=ext)
+        self.path = path
 
         
 def color_rgb(r,g,b):

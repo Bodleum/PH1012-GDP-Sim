@@ -34,14 +34,14 @@ golf_ball.setFill(color_rgb(240,248,255))
 golf_ball.setWidth(0)
 
 #Make tee
-tee = Image(Point(7.5, data.distance_scale*data.ground_height-1), "./graphics/tee.png")
-tee_text = Text(Point(12, data.distance_scale*data.ground_height+40), "0m")
+tee = Image(Point(7.5, data.ground_height-1), "./graphics/tee.png")
+tee_text = Text(Point(12, data.ground_height+40), "0m")
 tee_text.setFill(color_rgb(255,255,255))
 
 #Make ground
 grounds=[]
 for i in np.arange(25,1200,50):
-    ground_i=Image(Point(i,data.distance_scale*data.ground_height+40),"./graphics/grass.png")
+    ground_i=Image(Point(i,data.ground_height+40),"./graphics/grass.png")
     grounds.append(ground_i)
 
 #Make cloud
@@ -55,8 +55,8 @@ for i in range(0,random.randint(1,2)):
 #Flags
 flags=[]
 for i in np.arange(50,int(data.window_x/data.distance_scale),50):
-    flag_i = Image(Point(data.distance_scale*i+13,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
-    text_i = Text(Point(data.distance_scale*i+13,data.distance_scale*data.ground_height+40),str(i)+"m")
+    flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
+    text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
     flags.append(flag_i)
     flags.append(text_i)
@@ -67,7 +67,7 @@ range_display.setFill(color_rgb(0,0,0))
 
 def main_loop():
     #Moving
-    while (golf.y)>=(data.distance_scale*data.ground_height):
+    while (golf.y)>=(data.ground_height):
 
         #Move cloud
         for i in clouds:
