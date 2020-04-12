@@ -33,19 +33,16 @@ golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
 golf_ball.setFill(color_rgb(240,248,255))
 golf_ball.setWidth(0)
 
+#Make tee
+tee = Image(Point(7.5, data.distance_scale*data.ground_height-1), "./graphics/tee.png")
+tee_text = Text(Point(12, data.distance_scale*data.ground_height+40), "0m")
+tee_text.setFill(color_rgb(255,255,255))
+
 #Make ground
 grounds=[]
 for i in np.arange(25,1200,50):
     ground_i=Image(Point(i,data.distance_scale*data.ground_height+40),"./graphics/grass.png")
     grounds.append(ground_i)
-
-
-
-#OLD GROUND
-# ground=Rectangle(Point(-10,(data.window_y+10)),Point((data.window_x+10),(data.distance_scale*data.ground_height+5)))
-# ground.setFill(color_rgb(84,45,36))
-# ground.setOutline(color_rgb(125,194,66))
-# ground.setWidth(10)
 
 #Make cloud
 clouds=[]
@@ -58,14 +55,15 @@ for i in range(0,random.randint(1,2)):
 #Flags
 flags=[]
 for i in np.arange(50,int(data.window_x/data.distance_scale),50):
-    flag_i = Image(Point(data.distance_scale*i+5,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
-    text_i = Text(Point(data.distance_scale*i+5,data.distance_scale*data.ground_height+40),str(i)+"m")
+    flag_i = Image(Point(data.distance_scale*i+13,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
+    text_i = Text(Point(data.distance_scale*i+13,data.distance_scale*data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
     flags.append(flag_i)
     flags.append(text_i)
 
-print(flags)
-# flag=Image(Point(data.distance_scale*50,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
+#Range text
+range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
+range_display.setFill(color_rgb(0,0,0))
 
 def main_loop():
     #Moving
@@ -79,6 +77,9 @@ def main_loop():
         golf.update(tstep)
         golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
 
+        #Update range display
+        range_display.setText("Distance: "+str(int(round(golf.x-5,1)))+"m")
+
     #Close window
     window.getMouse()
     window.close()
@@ -87,7 +88,10 @@ def main_loop():
 window = GraphWin("Golf Simulation", data.window_x, data.window_y)
 window.setBackground(color_rgb(124, 185, 232))
 
-#draw
+#draw tee
+tee.draw(window)
+
+#draw golf ball
 golf_ball.draw(window)
 
 #draw ground
@@ -97,7 +101,13 @@ for i in grounds:
 #draw clouds
 for i in clouds:
     i.draw(window)
+
+#Draw Flags
+tee_text.draw(window)
 for i in flags:
         i.draw(window)
+
+#Draw range display
+range_display.draw(window)
 
 main_loop()
