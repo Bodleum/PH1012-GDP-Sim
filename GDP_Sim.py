@@ -2,7 +2,7 @@ import numpy as np
 import time
 import random
 
-from data.graphics import GraphWin,color_rgb,Circle,Rectangle,Point
+from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point
 
 from Ball import Ball
 import data.constants as data
