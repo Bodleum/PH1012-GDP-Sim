@@ -2,7 +2,7 @@ import numpy as np
 import time
 import random
 
-from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image
+from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image,Text
 
 from Ball import Ball
 import data.constants as data
@@ -14,7 +14,7 @@ degangle = float(input("Angle? --> "))
 vinit = Velocity(v0,degangle)
 
 #Drag Coefficient
-dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
+dragcoef=0.47 #float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax = (2*vinit.y/data.gravity)
@@ -31,6 +31,7 @@ golf.setvel(vinit)
 #Make golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
 golf_ball.setFill(color_rgb(240,248,255))
+golf_ball.setWidth(0)
 
 #Make ground
 ground=Rectangle(Point(-10,(data.window_y+10)),Point((data.window_x+10),(data.distance_scale*data.ground_height+5)))
@@ -41,11 +42,19 @@ ground.setWidth(10)
 #Make cloud
 cloud_start = random.randint(100,0.8*data.window_x)
 cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
-cloud.setFill(color_rgb(255,255,255))
-cloud.setOutline(color_rgb(255,255,255))
+cloud = Image(Point(cloud_start, 125),"./graphics/cloud_"+str(random.randint(1,11))+".png")
 
-#Flag
-flag=Image(Point(250,250),"./graphics/Golf_Flag.png")
+#Flags
+flags=[]
+for i in np.arange(50,int(data.window_x/data.distance_scale),50):
+    flag_i = Image(Point(data.distance_scale*i,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
+    text_i = Text(Point(data.distance_scale*i,data.distance_scale*data.ground_height+20),str(i)+"m")
+    text_i.setFill(color_rgb(255,255,255))
+    flags.append(flag_i)
+    flags.append(text_i)
+
+print(flags)
+# flag=Image(Point(data.distance_scale*50,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
 
 def main():
 
@@ -57,7 +66,8 @@ def main():
     golf_ball.draw(window)
     ground.draw(window)
     cloud.draw(window)
-    flag.draw(window)
+    for i in flags:
+        i.draw(window)
 
     #Moving
     while (golf.y)>=(data.distance_scale*data.ground_height):
