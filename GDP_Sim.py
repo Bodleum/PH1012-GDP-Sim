@@ -90,10 +90,10 @@ def main_loop():
         if (golf.x*data.distance_scale) <= 1000:
             golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
         else:
-            scroll_vel=-data.distance_scale**3*golf.vel.x
+            scroll_vel=-data.distance_scale*golf.vel.x
             for i in disp_obj:
                 i.move(scroll_vel*data.distance_scale*tstep,0)
-                golf_ball.move(0, -data.distance_scale*golf.yinc)
+            golf_ball.move(0, -data.distance_scale*golf.yinc)
 
 
         #Update range display
