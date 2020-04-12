@@ -2,7 +2,7 @@ import numpy as np
 import time
 import random
 
-from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point
+from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image
 
 from Ball import Ball
 import data.constants as data
@@ -44,6 +44,9 @@ cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
 cloud.setFill(color_rgb(255,255,255))
 cloud.setOutline(color_rgb(255,255,255))
 
+#Flag
+flag=Image(Point(250,250),"./graphics/Golf_Flag.png")
+
 def main():
 
     #make window
@@ -54,6 +57,7 @@ def main():
     golf_ball.draw(window)
     ground.draw(window)
     cloud.draw(window)
+    flag.draw(window)
 
     #Moving
     while (golf.y)>=(data.distance_scale*data.ground_height):
