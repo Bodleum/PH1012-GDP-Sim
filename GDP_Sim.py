@@ -8,6 +8,7 @@ from Ball import Ball
 import data.constants as data
 from Velocity import Velocity
 
+#Initial velocity
 v0 = float(input("Initial v? --> "))
 degangle = float(input("Angle? --> "))
 vinit = Velocity(v0,degangle)
@@ -19,30 +20,25 @@ dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 tmax = (2*vinit.y/data.gravity)
 tstep=0.001
 
-#Range estimate
-r_est=(vinit.x)*tmax
+#Range and height estimates
+range_est=(vinit.x)*tmax
+height_est = (vinit.y**2)/(2*data.gravity)
 
-#Height extimate
-h_est = (vinit.y**2)/(2*data.gravity)
-
-#Graph data
-x_data=[]
-y_data=[]
-
+#Create golf ball and set initial velocity
 golf=Ball(0,0,dragcoef)
 golf.setvel(vinit)
 
-#create golf ball
+#Make golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
 golf_ball.setFill(color_rgb(240,248,255))
 
-#make ground
+#Make ground
 ground=Rectangle(Point(-10,710),Point(1210,565))
 ground.setFill(color_rgb(84,45,36))
 ground.setOutline(color_rgb(125,194,66))
 ground.setWidth(10)
 
-#make cloud
+#Make cloud
 cloud_start = random.randint(100,1000)
 cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
 cloud.setFill(color_rgb(255,255,255))
@@ -59,7 +55,7 @@ def main():
     ground.draw(window)
     cloud.draw(window)
 
-    #moving golf ball
+    #Moving
     while (golf.y)>=(560):
         #Move cloud
         cloud.move(0.02,(random.uniform(-0.05,0.05)))
@@ -68,7 +64,7 @@ def main():
         golf.update(tstep)
         golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
 
-    #close window
+    #Close window
     window.getMouse()
     window.close()
 
