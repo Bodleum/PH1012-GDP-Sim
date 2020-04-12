@@ -18,7 +18,7 @@ dragcoef=0.47 #float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax = (2*vinit.y/data.gravity)
-tstep=0.001
+tstep=0.0025
 
 #Range and height estimates
 range_est=(vinit.x)*tmax
@@ -40,9 +40,12 @@ ground.setOutline(color_rgb(125,194,66))
 ground.setWidth(10)
 
 #Make cloud
-cloud_start = random.randint(100,0.8*data.window_x)
-cloud=Rectangle(Point(cloud_start,125),Point((cloud_start+300),50))
-cloud = Image(Point(cloud_start, 125),"./graphics/cloud_"+str(random.randint(1,11))+".png")
+clouds=[]
+for i in range(0,random.randint(1,2)):
+    cloud_start_x = random.randint(100,0.8*data.window_x)
+    cloud_start_y = random.randint(0,300)
+    cloud_i = Image(Point(cloud_start_x, cloud_start_y),"./graphics/cloud_"+str(random.randint(1,11))+".png")
+    clouds.append(cloud_i)
 
 #Flags
 flags=[]
@@ -56,23 +59,13 @@ for i in np.arange(50,int(data.window_x/data.distance_scale),50):
 print(flags)
 # flag=Image(Point(data.distance_scale*50,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
 
-def main():
-
-    #make window
-    window=GraphWin("Golf Simulation",data.window_x,data.window_y)
-    window.setBackground(color_rgb(124,185,232))
-
-    #draw
-    golf_ball.draw(window)
-    ground.draw(window)
-    cloud.draw(window)
-    for i in flags:
-        i.draw(window)
-
+def main_loop():
     #Moving
     while (golf.y)>=(data.distance_scale*data.ground_height):
+
         #Move cloud
-        cloud.move(0.02,(random.uniform(-0.05,0.05)))
+        for i in clouds:
+            i.move(0.02,(random.uniform(-0.05,0.05)))
         
         #Move golfball
         golf.update(tstep)
@@ -82,4 +75,16 @@ def main():
     window.getMouse()
     window.close()
 
-main()
+#make window
+window = GraphWin("Golf Simulation", data.window_x, data.window_y)
+window.setBackground(color_rgb(124, 185, 232))
+
+#draw
+golf_ball.draw(window)
+ground.draw(window)
+for i in clouds:
+    i.draw(window)
+for i in flags:
+        i.draw(window)
+
+main_loop()
