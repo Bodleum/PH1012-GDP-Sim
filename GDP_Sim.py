@@ -25,7 +25,7 @@ range_est=(vinit.x)*tmax
 height_est = (vinit.y**2)/(2*data.gravity)
 
 #Create golf ball and set initial velocity
-golf=Ball(0,0,dragcoef)
+golf=Ball(5,0,dragcoef)
 golf.setvel(vinit)
 
 #Make golf ball
@@ -34,10 +34,18 @@ golf_ball.setFill(color_rgb(240,248,255))
 golf_ball.setWidth(0)
 
 #Make ground
-ground=Rectangle(Point(-10,(data.window_y+10)),Point((data.window_x+10),(data.distance_scale*data.ground_height+5)))
-ground.setFill(color_rgb(84,45,36))
-ground.setOutline(color_rgb(125,194,66))
-ground.setWidth(10)
+grounds=[]
+for i in np.arange(25,1200,50):
+    ground_i=Image(Point(i,data.distance_scale*data.ground_height+40),"./graphics/grass.png")
+    grounds.append(ground_i)
+
+
+
+#OLD GROUND
+# ground=Rectangle(Point(-10,(data.window_y+10)),Point((data.window_x+10),(data.distance_scale*data.ground_height+5)))
+# ground.setFill(color_rgb(84,45,36))
+# ground.setOutline(color_rgb(125,194,66))
+# ground.setWidth(10)
 
 #Make cloud
 clouds=[]
@@ -50,8 +58,8 @@ for i in range(0,random.randint(1,2)):
 #Flags
 flags=[]
 for i in np.arange(50,int(data.window_x/data.distance_scale),50):
-    flag_i = Image(Point(data.distance_scale*i,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
-    text_i = Text(Point(data.distance_scale*i,data.distance_scale*data.ground_height+20),str(i)+"m")
+    flag_i = Image(Point(data.distance_scale*i+5,data.distance_scale*data.ground_height-30),"./graphics/golf_flag.png")
+    text_i = Text(Point(data.distance_scale*i+5,data.distance_scale*data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
     flags.append(flag_i)
     flags.append(text_i)
@@ -81,7 +89,12 @@ window.setBackground(color_rgb(124, 185, 232))
 
 #draw
 golf_ball.draw(window)
-ground.draw(window)
+
+#draw ground
+for i in grounds:
+    i.draw(window)
+
+#draw clouds
 for i in clouds:
     i.draw(window)
 for i in flags:
