@@ -23,5 +23,5 @@ class Velocity:
 
         self.resolve()
     
-    def rename(delf,rename):
-        self.name = renames
+    def rename(self,rename):
+        self.name = rename
