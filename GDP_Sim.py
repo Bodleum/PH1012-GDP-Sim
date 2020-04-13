@@ -6,7 +6,7 @@ from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image
 
 from Ball import Ball
 import data.constants as data
-from Velocity import Velocity
+from Vector import *
 
 #List of objects in display
 disp_obj=[]
@@ -15,10 +15,10 @@ scroll_vel=0
 #Initial velocity
 v0 = float(input("Initial v? --> "))
 degangle = float(input("Angle? --> "))
-vinit = Velocity(v0,degangle)
+vinit = Vector("Vinit", v0, degangle)
 
 #Drag Coefficient
-dragcoef=0.47 #float(input("Drag coefficient? (roughly 0.5) --> "))
+dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
 
 #Time
 tmax = (2*vinit.y/data.gravity)
@@ -30,7 +30,7 @@ height_est = (vinit.y**2)/(2*data.gravity)
 
 #Create golf ball and set initial velocity
 golf=Ball(5,0,dragcoef)
-golf.setvel(vinit)
+golf.veladdvel(vinit)
 
 #Make golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
@@ -85,18 +85,12 @@ def main_loop():
         for i in clouds:
             i.move(0.02,(random.uniform(-0.05,0.05)))
         
-        #Move golfball
+        #Move golfball3
         golf.update(tstep)
-        if (golf.x*data.distance_scale) <= 1000:
-            golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
-        else:
-            scroll_vel=-data.distance_scale*golf.vel.x
-            for i in disp_obj:
-                i.move(scroll_vel*data.distance_scale*tstep,0)
-            golf_ball.move(0, -data.distance_scale*golf.yinc)
+        golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
 
 
-        #Update range display
+        #Update range displays
         range_display.setText("Distance: "+str(int(round(golf.x-5,1)))+"m")
 
     #Close window

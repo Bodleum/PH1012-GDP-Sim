@@ -1,7 +1,7 @@
 gravity = 9.81
 airdens = 1.2041  # from Wikipedia -> temporary
 radius_scale=150
-distance_scale=3.5
+distance_scale=4
 ground_height=620
 window_x=1200
 window_y=700

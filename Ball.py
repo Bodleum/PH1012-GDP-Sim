@@ -1,6 +1,7 @@
 import numpy as np
 
 import data.constants as data
+from Vector import *
 
 class Ball:
     def __init__(self, x0, y0,dragcoef):
@@ -22,23 +23,54 @@ class Ball:
         #Air resistance
         self.drag = dragcoef
 
-    def setvel(self, velocity):
-        self.vel = velocity
+        #Velocity
+        self.vel=None
+
+        #Acceleration
+        self.accel=None
+
+    def addvel(self,name,mag,angle):
+        if self.vel==None:
+            self.vel = (Vector(name,mag,angle))
+        else:
+            self.vel.add(Vector(name,mag,angle))
+
+    def veladdvel(self,vel2):
+        if self.vel == None:
+            self.vel = vel2
+        else:
+            self.vel.add(vel2)
+
+    def addaccel(self,name,mag,angle):
+        if self.accel==None:
+            self.accel = (Vector(name,mag,angle))
+        else:
+            self.accel.add(Vector(name,mag,angle))
+
+    def acceladdaccel(self,accel2):
+        if self.accel == None:
+            self.accel = accel2
+        else:
+            self.accel.add(accel2)
 
     def update(self, tstep):
 
+        #Reset acceleration with gravity
+        self.accel = Vector("Gravity",data.gravity,-90)
+
         #Air resistance
-        self.airresx = -1*data.airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.x**2
-        self.airresy = -1*data.airdens*self.drag *0.5*(np.pi*self.radius**2)*self.vel.y**2
+        self.air_resistance = Vector("Air_resistance", (data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2/self.mass),self.vel.degangle-180)
 
-        #x
-        self.ax = (self.airresx/self.mass)
-        self.vel.x += self.ax*tstep
-        self.x += self.vel.x*tstep
+        #Acceleration
+        self.acceladdaccel(self.air_resistance)
+
+        #Velocity
+        self.addvel("Velocity_step",self.accel.mag*tstep,self.accel.degangle)
+
+        #Increase
         self.xinc = self.vel.x*tstep
-
-        #y
-        self.ay = -1*data.gravity + (self.airresy/self.mass)
-        self.vel.y += self.ay*tstep
-        self.y += self.vel.y*tstep
         self.yinc = self.vel.y*tstep
+
+        #Position
+        self.x += self.xinc
+        self.y += self.yinc
