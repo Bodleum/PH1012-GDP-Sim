@@ -17,9 +17,6 @@ v0 = float(input("Initial v? --> "))
 degangle = float(input("Angle? --> "))
 vinit = Vector("Vinit", v0, degangle)
 
-#Drag Coefficient
-dragcoef=float(input("Drag coefficient? (roughly 0.5) --> "))
-
 #Time
 tmax = (2*vinit.y/data.gravity)
 tstep=0.0025
@@ -29,7 +26,7 @@ range_est=(vinit.x)*tmax
 height_est = (vinit.y**2)/(2*data.gravity)
 
 #Create golf ball and set initial velocity
-golf=Ball(5,0,dragcoef)
+golf=Ball(5,0,data.dragcoef)
 golf.veladdvel(vinit)
 
 #Make golf ball
@@ -91,7 +88,7 @@ def main_loop():
 
 
         #Update range displays
-        range_display.setText("Distance: "+str(int(round(golf.x-5,1)))+"m")
+        range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
 
     #Close window
     window.getMouse()
