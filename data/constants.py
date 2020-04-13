@@ -7,4 +7,4 @@ window_x=1200
 window_y=700
 golf_ball_mass = 0.05
 golf_ball_radius = 0.02
-dragcoef=0.74
+dragcoef=0.47

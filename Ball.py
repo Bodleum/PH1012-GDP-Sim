@@ -59,7 +59,7 @@ class Ball:
         self.accel = Vector("Gravity",data.gravity,-90)
 
         #Air resistance
-        self.air_resistance = Vector("Air_resistance", (data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2/self.mass),self.vel.degangle-180)
+        self.air_resistance = Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2)/self.mass),(self.vel.degangle-180))
 
         #Acceleration
         self.acceladdaccel(self.air_resistance)
