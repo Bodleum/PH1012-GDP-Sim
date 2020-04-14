@@ -27,7 +27,7 @@ height_est = (vinit.y**2)/(2*data.gravity)
 
 #Create golf ball and set initial velocity
 golf=Ball(5,0,data.dragcoef)
-golf.veladdvel(vinit)
+golf.addvel(vinit)
 
 #Make golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
@@ -86,9 +86,12 @@ def main_loop():
         golf.update(tstep)
         golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
 
+        print(list(golf.accel_dict.values())[0].x,list(golf.accel_dict.values())[0].y)
 
         #Update range displays
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
+
+    print("Done")
 
     #Close window
     window.getMouse()

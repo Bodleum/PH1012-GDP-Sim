@@ -25,47 +25,37 @@ class Ball:
 
         #Velocity
         self.vel=None
+        self.vel_dict={}
 
         #Acceleration
-        self.accel=None
+        self.accel = None
+        self.accel_dict={}
+        self.addaccel(Vector("Gravity", data.gravity, -90))
 
-    def addvel(self,name,mag,angle):
-        if self.vel==None:
-            self.vel = (Vector(name,mag,angle))
-        else:
-            self.vel.add(Vector(name,mag,angle))
+    def addvel(self,vel2):
+        self.vel_dict[vel2.name] = vel2
 
-    def veladdvel(self,vel2):
-        if self.vel == None:
-            self.vel = vel2
-        else:
-            self.vel.add(vel2)
-
-    def addaccel(self,name,mag,angle):
-        if self.accel==None:
-            self.accel = (Vector(name,mag,angle))
-        else:
-            self.accel.add(Vector(name,mag,angle))
-
-    def acceladdaccel(self,accel2):
-        if self.accel == None:
-            self.accel = accel2
-        else:
-            self.accel.add(accel2)
+    def addaccel(self,accel2):
+        self.accel_dict[accel2.name] = accel2
 
     def update(self, tstep):
 
-        #Reset acceleration with gravity
-        self.accel = Vector("Gravity",data.gravity,-90)
-
-        #Air resistance
-        self.air_resistance = Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2)/self.mass),(self.vel.degangle-180))
+        #Lists
+        self.accel_list = list(self.accel_dict.values())
+        self.vel_list = list(self.vel_dict.values())
 
         #Acceleration
-        self.acceladdaccel(self.air_resistance)
+        self.accel = self.accel_list[0]
+        if len(self.accel_list)>1:
+            for i in range(1,len(self.accel_list)):
+                self.accel.add(self.accel_list[i])
 
         #Velocity
-        self.addvel("Velocity_step",self.accel.mag*tstep,self.accel.degangle)
+        self.vel = self.vel_list[0]
+        self.addvel(Vector("Velocity_step",self.accel.mag*tstep,self.accel.degangle))
+        if len(self.vel_list)>1:
+            for i in range(1,len(self.vel_list)):
+                self.vel.add(self.vel_list[i])
 
         #Increase
         self.xinc = self.vel.x*tstep
@@ -74,3 +64,7 @@ class Ball:
         #Position
         self.x += self.xinc
         self.y += self.yinc
+
+        #Air resistance
+        # self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2)/self.mass), (self.vel.degangle-180)))
+        
