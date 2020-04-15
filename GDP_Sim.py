@@ -11,6 +11,7 @@ from Vector import *
 #List of objects in display
 disp_obj=[]
 scroll_vel=0
+scroll = False
 
 #Initial velocity
 v0 = float(input("Initial v? --> "))
@@ -44,11 +45,8 @@ disp_obj.append(tee_text)
 
 
 #Make ground
-grounds=[]
-for i in np.arange(25,2500,50):
-    ground_i=Image(Point(i,data.ground_height+40),"./graphics/grass.png")
-    grounds.append(ground_i)
-    disp_obj.append(ground_i)
+ground = Image(Point(6400,data.ground_height+40),"./graphics/grass_long.png")
+disp_obj.append(ground)
 
 #Make cloud
 clouds=[]
@@ -61,7 +59,7 @@ for i in range(0,random.randint(1,2)):
 
 #Flags
 flags=[]
-for i in np.arange(50,int(2500/data.distance_scale),50):
+for i in np.arange(50,int(500),50):
     flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
     text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
@@ -84,10 +82,19 @@ def main_loop():
         
         #Move golfball3
         golf.update(tstep)
-        golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        if (data.distance_scale*golf.x) < 1000:
+            scroll = False
+        elif (data.distance_scale*golf.x) >= 1000:
+            scroll = True
+            scroll_vel = golf.inst_vel.x
 
-        # print(list(golf.accel_dict.values())[0].x,list(golf.accel_dict.values())[0].y)
-        # print(list(golf.accel_dict.values())[0].name)
+        if scroll == False:
+            golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        elif scroll == True:
+            golf_ball.move(0, -data.distance_scale*golf.yinc)
+            for i in disp_obj:
+                i.move(data.distance_scale*(-scroll_vel*tstep), 0)
+        
 
         #Update range displays
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
@@ -109,8 +116,7 @@ tee.draw(window)
 golf_ball.draw(window)
 
 #draw ground
-for i in grounds:
-    i.draw(window)
+ground.draw(window)
 
 #draw clouds
 for i in clouds:
