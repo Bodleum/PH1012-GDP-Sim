@@ -59,7 +59,7 @@ for i in range(0,random.randint(1,2)):
 
 #Flags
 flags=[]
-for i in np.arange(50,int(500),50):
+for i in np.arange(50,int(501),50):
     flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
     text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
@@ -80,7 +80,7 @@ def main_loop():
         for i in clouds:
             i.move(0.02,(random.uniform(-0.05,0.05)))
         
-        #Move golfball3
+        #Move golfball
         golf.update(tstep)
         if (data.distance_scale*golf.x) < 1000:
             scroll = False
