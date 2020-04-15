@@ -11,6 +11,7 @@ from Vector import *
 #List of objects in display
 disp_obj=[]
 scroll_vel=0
+scroll = False
 
 #Initial velocity
 v0 = float(input("Initial v? --> "))
@@ -84,10 +85,19 @@ def main_loop():
         
         #Move golfball3
         golf.update(tstep)
-        golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        if (data.distance_scale*golf.x) < 1000:
+            scroll = False
+        elif (data.distance_scale*golf.x) >= 1000:
+            scroll = True
+            scroll_vel = golf.inst_vel.x
 
-        # print(list(golf.accel_dict.values())[0].x,list(golf.accel_dict.values())[0].y)
-        # print(list(golf.accel_dict.values())[0].name)
+        if scroll == False:
+            golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+        elif scroll == True:
+            golf_ball.move(0, -data.distance_scale*golf.yinc)
+            for i in disp_obj:
+                i.move(data.distance_scale*(-scroll_vel*tstep), 0)
+        
 
         #Update range displays
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
