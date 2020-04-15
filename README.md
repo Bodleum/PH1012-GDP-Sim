@@ -4,6 +4,8 @@
 
 The file to run is "GDP_Sim.py".
 
-For help runnign the simulation, see the video I posted on Teams.
+For help running the simulation, see the video I posted on Teams.
+
+Variables like the drag coefficient, gravity, etc. can be changed in "data/constants.py"
 
 Functionality will (hopefully) be added in the future.  
