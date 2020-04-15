@@ -45,11 +45,8 @@ disp_obj.append(tee_text)
 
 
 #Make ground
-grounds=[]
-for i in np.arange(25,2500,50):
-    ground_i=Image(Point(i,data.ground_height+40),"./graphics/grass.png")
-    grounds.append(ground_i)
-    disp_obj.append(ground_i)
+ground = Image(Point(6400,data.ground_height+40),"./graphics/grass_long.png")
+disp_obj.append(ground)
 
 #Make cloud
 clouds=[]
@@ -62,7 +59,7 @@ for i in range(0,random.randint(1,2)):
 
 #Flags
 flags=[]
-for i in np.arange(50,int(2500/data.distance_scale),50):
+for i in np.arange(50,int(500),50):
     flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
     text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
@@ -119,8 +116,7 @@ tee.draw(window)
 golf_ball.draw(window)
 
 #draw ground
-for i in grounds:
-    i.draw(window)
+ground.draw(window)
 
 #draw clouds
 for i in clouds:
