@@ -1,6 +1,9 @@
 #VSCode
 *.code-workspace
 
+#Testing
+testarea.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
