@@ -35,6 +35,8 @@ class Vector:
             self.y = -1*np.abs(self.y)
 
     def add(self,vec2):
+        self.name = str(self.name+" + "+vec2.name)
+
         self.x += vec2.x
         self.y += vec2.y
 

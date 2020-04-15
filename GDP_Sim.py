@@ -86,7 +86,8 @@ def main_loop():
         golf.update(tstep)
         golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
 
-        print(list(golf.accel_dict.values())[0].x,list(golf.accel_dict.values())[0].y)
+        # print(list(golf.accel_dict.values())[0].x,list(golf.accel_dict.values())[0].y)
+        # print(list(golf.accel_dict.values())[0].name)
 
         #Update range displays
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")

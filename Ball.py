@@ -24,11 +24,11 @@ class Ball:
         self.drag = dragcoef
 
         #Velocity
-        self.vel=None
+        self.inst_vel=None
         self.vel_dict={}
 
         #Acceleration
-        self.accel = None
+        self.inst_accel = None
         self.accel_dict={}
         self.addaccel(Vector("Gravity", data.gravity, -90))
 
@@ -45,26 +45,34 @@ class Ball:
         self.vel_list = list(self.vel_dict.values())
 
         #Acceleration
-        self.accel = self.accel_list[0]
-        if len(self.accel_list)>1:
+        self.inst_accel = self.accel_list[0]
+        if len(self.accel_list) > 1:
             for i in range(1,len(self.accel_list)):
-                self.accel.add(self.accel_list[i])
+                self.inst_accel.add(self.accel_list[i])
 
         #Velocity
-        self.vel = self.vel_list[0]
-        self.addvel(Vector("Velocity_step",self.accel.mag*tstep,self.accel.degangle))
+        self.inst_vel = self.vel_list[0]
+        self.addvel(Vector("Velocity_step",self.inst_accel.mag*tstep,self.inst_accel.degangle))
         if len(self.vel_list)>1:
             for i in range(1,len(self.vel_list)):
-                self.vel.add(self.vel_list[i])
+                self.inst_vel.add(self.vel_list[i])
 
         #Increase
-        self.xinc = self.vel.x*tstep
-        self.yinc = self.vel.y*tstep
+        self.xinc = self.inst_vel.x*tstep
+        self.yinc = self.inst_vel.y*tstep
 
         #Position
         self.x += self.xinc
         self.y += self.yinc
+        
+
+        #Reset acceleration
+        self.inst_accel = None
+        self.accel_dict = {}
+
+        #Gravity
+        self.addaccel(Vector("Gravity", data.gravity, -90))
 
         #Air resistance
-        # self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.vel.mag**2)/self.mass), (self.vel.degangle-180)))
+        self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.inst_vel.mag**2)/self.mass), (self.inst_vel.degangle-180)))
         
