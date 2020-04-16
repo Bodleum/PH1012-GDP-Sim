@@ -1,3 +1,4 @@
+import random
 
 # Universal
 gravity = 9.81 # in m/s^2
@@ -8,12 +9,14 @@ radius_scale = 150 # Multiplier to artificially inflate the golf ball's size, bi
                    # VISUAL ONLY
 distance_scale = 4 # Multiplier for how zoomed in/out the scene is, bigger means more zoomed in
 ground_height = 620 # How high the ground is in pixels, reccomend not changing
+flag_spacing = 75 # Distance between flags in m
+flag_range = 300 # Furthest out flag marker in m
 
 
 # Golf ball
 golf_ball_mass = 0.05 # Mass of golf ball in kg
 golf_ball_radius = 0.02 # Radius of golfball in m
-dragcoef = 0.47 # Drag coefficient of golf ball, larger means more air resistance, 0 is no air resistance
+dragcoef = 0.35 # Drag coefficient of golf ball, larger means more air resistance, 0 is no air resistance
 
 
 # Location

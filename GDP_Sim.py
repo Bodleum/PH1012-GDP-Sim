@@ -60,7 +60,7 @@ for i in range(0,random.randint(1,2)):
 
 #Flags
 flags=[]
-for i in np.arange(50,int(501),50):
+for i in np.arange(data.flag_spacing,data.flag_range+1,data.flag_spacing):
     flag_i = Image(Point(data.distance_scale*i+13,data.ground_height-30),"./graphics/golf_flag.png")
     text_i = Text(Point(data.distance_scale*i+13,data.ground_height+40),str(i)+"m")
     text_i.setFill(color_rgb(255,255,255))
@@ -75,7 +75,7 @@ range_display.setFill(color_rgb(0,0,0))
 
 # Wind arrow
 wind_arrow = Line(Point(1100,200),Point((1100-5*Wind.wind.x),(200+5*Wind.wind.y)))
-wind_arrow.setWidth(2)
+wind_arrow.setWidth(1)
 wind_arrow.setArrow("last")
 wind_text = Text(Point(1100,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
 
