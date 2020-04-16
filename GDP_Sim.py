@@ -2,7 +2,7 @@ import numpy as np
 import time
 import random
 
-from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image,Text
+from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image,Text,Line
 
 from Ball import Ball
 import data.constants as data
@@ -74,6 +74,10 @@ range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
 range_display.setFill(color_rgb(0,0,0))
 
 # Wind arrow
+wind_arrow = Line(Point(1100,200),Point((1100-5*Wind.wind.x),(200+5*Wind.wind.y)))
+wind_arrow.setWidth(2)
+wind_arrow.setArrow("last")
+wind_text = Text(Point(1100,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
 
 def main_loop():
     #Moving
@@ -81,7 +85,7 @@ def main_loop():
 
         #Move cloud
         for i in clouds:
-            i.move(Wind.wind.x*tstep,Wind.wind.y*tstep + (random.uniform(-0.05,0.05)))
+            i.move(-1*Wind.wind.x*tstep,Wind.wind.y*tstep + (random.uniform(-0.05,0.05)))
         
         #Move golfball
         golf.update(tstep)
@@ -133,5 +137,9 @@ for i in flags:
 
 #Draw range display
 range_display.draw(window)
+
+# Draw wind arrow
+wind_arrow.draw(window)
+wind_text.draw(window)
 
 main_loop()
