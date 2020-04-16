@@ -81,7 +81,7 @@ def main_loop():
 
         #Move cloud
         for i in clouds:
-            i.move(0.02,(random.uniform(-0.05,0.05)))
+            i.move(Wind.wind.x*tstep,Wind.wind.y*tstep + (random.uniform(-0.05,0.05)))
         
         #Move golfball
         golf.update(tstep)
@@ -103,7 +103,6 @@ def main_loop():
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
 
     print("Done")
-    print(Wind.wind.x)
     print("Golf ball traveled:",round(golf.x-5,3),"m")
 
     #Close window
