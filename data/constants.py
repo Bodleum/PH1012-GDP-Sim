@@ -18,6 +18,7 @@ dragcoef = 0.47 # Drag coefficient of golf ball, larger means more air resistanc
 
 # Location
 airdens = 1.2041  # from Wikipedia -> temporary
+wind_avg = 5 # Average wind speed in m/s
 
 
 # Scene

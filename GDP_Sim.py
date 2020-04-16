@@ -7,6 +7,7 @@ from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image
 from Ball import Ball
 import data.constants as data
 from Vector import *
+import Wind
 
 #List of objects in display
 disp_obj=[]
@@ -72,6 +73,8 @@ for i in np.arange(50,int(501),50):
 range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
 range_display.setFill(color_rgb(0,0,0))
 
+# Wind arrow
+
 def main_loop():
     #Moving
     while (golf.y)>=(data.ground_height):
@@ -100,6 +103,8 @@ def main_loop():
         range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
 
     print("Done")
+    print(Wind.wind.x)
+    print("Golf ball traveled:",round(golf.x-5,3),"m")
 
     #Close window
     window.getMouse()
@@ -124,7 +129,7 @@ for i in clouds:
 
 #Draw Flags
 tee_text.draw(window)
-for i in flags:j
+for i in flags:
         i.draw(window)
 
 #Draw range display

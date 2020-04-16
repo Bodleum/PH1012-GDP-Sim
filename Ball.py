@@ -1,7 +1,9 @@
 import numpy as np
+import random
 
 import data.constants as data
 from Vector import *
+import Wind
 
 class Ball:
     def __init__(self, x0, y0,dragcoef):
@@ -31,6 +33,9 @@ class Ball:
         self.inst_accel = None
         self.accel_dict={}
         self.addaccel(Vector("Gravity", data.gravity, -90))
+
+        # Wind
+        self.wind_rel = None
 
     def addvel(self,vel2):
         self.vel_dict[vel2.name] = vel2
@@ -64,7 +69,10 @@ class Ball:
         #Position
         self.x += self.xinc
         self.y += self.yinc
-        
+
+        # Wind
+        self.wind_rel = Vector("Wind_rel",self.inst_vel.mag,self.inst_vel.degangle)
+        self.wind_rel.add(Wind.wind)
 
         #Reset acceleration
         self.inst_accel = None
@@ -74,5 +82,5 @@ class Ball:
         self.addaccel(Vector("Gravity", data.gravity, -90))
 
         #Air resistance
-        self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.inst_vel.mag**2)/self.mass), (self.inst_vel.degangle-180)))
+        self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
         
