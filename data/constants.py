@@ -1,10 +1,25 @@
-gravity = 9.81
+
+# Universal
+gravity = 9.81 # in m/s^2
+
+
+# Visual
+radius_scale = 150 # Multiplier to artificially inflate the golf ball's size, bigger means larger ball
+                   # VISUAL ONLY
+distance_scale = 4 # Multiplier for how zoomed in/out the scene is, bigger means more zoomed in
+ground_height = 620 # How high the ground is in pixels, reccomend not changing
+
+
+# Golf ball
+golf_ball_mass = 0.05 # Mass of golf ball in kg
+golf_ball_radius = 0.02 # Radius of golfball in m
+dragcoef = 0.47 # Drag coefficient of golf ball, larger means more air resistance, 0 is no air resistance
+
+
+# Location
 airdens = 1.2041  # from Wikipedia -> temporary
-radius_scale=150
-distance_scale=4
-ground_height=620
-window_x=1200
-window_y=700
-golf_ball_mass = 0.05
-golf_ball_radius = 0.02
-dragcoef=0.47
+
+
+# Scene
+window_x=1200 # Length of window in pixels
+window_y=700 # Height of window in pixels

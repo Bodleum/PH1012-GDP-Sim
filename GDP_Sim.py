@@ -124,7 +124,7 @@ for i in clouds:
 
 #Draw Flags
 tee_text.draw(window)
-for i in flags:
+for i in flags:j
         i.draw(window)
 
 #Draw range display
