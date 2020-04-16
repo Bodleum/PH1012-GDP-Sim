@@ -7,10 +7,10 @@ gravity = 9.81 # in m/s^2
 # Visual
 radius_scale = 150 # Multiplier to artificially inflate the golf ball's size, bigger means larger ball
                    # VISUAL ONLY
-distance_scale = 4 # Multiplier for how zoomed in/out the scene is, bigger means more zoomed in
+distance_scale = 4.5 # Multiplier for how zoomed in/out the scene is, bigger means more zoomed in
 ground_height = 620 # How high the ground is in pixels, reccomend not changing
-flag_spacing = 75 # Distance between flags in m
-flag_range = 300 # Furthest out flag marker in m
+flag_spacing = 50 # Distance between flags in m
+flag_range = 400 # Furthest out flag marker in m
 
 
 # Golf ball

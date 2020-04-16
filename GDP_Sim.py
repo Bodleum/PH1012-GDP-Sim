@@ -21,7 +21,7 @@ vinit = Vector("Vinit", v0, degangle)
 
 #Time
 tmax = (2*vinit.y/data.gravity)
-tstep=0.0025
+tstep=0.005
 
 #Range and height estimates
 range_est=(vinit.x)*tmax
@@ -97,6 +97,7 @@ def main_loop():
 
         if scroll == False:
             golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
+            time.sleep(0.005)
         elif scroll == True:
             golf_ball.move(0, -data.distance_scale*golf.yinc)
             for i in disp_obj:
