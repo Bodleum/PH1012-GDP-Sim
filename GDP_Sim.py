@@ -21,7 +21,7 @@ vinit = Vector("Vinit", v0, degangle)
 
 #Time
 tmax = (2*vinit.y/data.gravity)
-tstep=0.005
+tstep=0.0075
 
 #Range and height estimates
 range_est=(vinit.x)*tmax
@@ -69,6 +69,10 @@ for i in np.arange(data.flag_spacing,data.flag_range+1,data.flag_spacing):
     disp_obj.append(flag_i)
     disp_obj.append(text_i)
 
+# Location text
+loc_text = Text(Point(1100,100),data.location)
+loc_text.setFill(color_rgb(0,0,0))
+
 #Range text
 range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
 range_display.setFill(color_rgb(0,0,0))
@@ -97,7 +101,7 @@ def main_loop():
 
         if scroll == False:
             golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
-            time.sleep(0.005)
+            time.sleep(0.00325)
         elif scroll == True:
             golf_ball.move(0, -data.distance_scale*golf.yinc)
             for i in disp_obj:
@@ -135,6 +139,9 @@ for i in clouds:
 tee_text.draw(window)
 for i in flags:
         i.draw(window)
+
+# Draw Location text
+loc_text.draw(window)
 
 #Draw range display
 range_display.draw(window)
