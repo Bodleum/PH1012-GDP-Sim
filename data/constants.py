@@ -35,9 +35,6 @@ elif location == "Singapore":
     altitude = 0  # Altutide in m
     temperature = 26.1  # Temperature in Celcius
     wind_avg = 3  # Average wind speed in m/s
-else:
-    print("Not a valid location.")
-
 #Calculation
 P_0 = 101325 # Standard atmospheric pressure in Pa
 R = 287.058 # Specific gas constant for air in J/kgK

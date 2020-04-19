@@ -37,6 +37,9 @@ class Ball:
         # Wind
         self.wind_rel = None
 
+        # Spin
+        self.w = None
+
     def addvel(self,vel2):
         self.vel_dict[vel2.name] = vel2
 
