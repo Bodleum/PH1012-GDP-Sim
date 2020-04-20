@@ -103,7 +103,7 @@ def main_loop():
 
         if scroll == False:
             golf_ball.move(data.distance_scale*golf.xinc, -data.distance_scale*golf.yinc)
-            time.sleep(0.00325)
+            time.sleep(0.0025)
         elif scroll == True:
             golf_ball.move(0, -data.distance_scale*golf.yinc)
             for i in disp_obj:
