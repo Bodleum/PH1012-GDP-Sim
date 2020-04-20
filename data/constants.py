@@ -17,6 +17,7 @@ flag_range = 400 # Furthest out flag marker in m
 golf_ball_mass = 0.05 # Mass of golf ball in kg
 golf_ball_radius = 0.02 # Radius of golfball in m
 dragcoef = 0.35 # Drag coefficient of golf ball, larger means more air resistance, 0 is no air resistance
+liftcoef = 1
 
 
 # Location

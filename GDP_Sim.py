@@ -18,6 +18,7 @@ scroll = False
 v0 = float(input("Initial v? --> "))
 degangle = float(input("Angle? --> "))
 vinit = Vector("Vinit", v0, degangle)
+winit = 280
 
 #Time
 tmax = (2*vinit.y/data.gravity)
@@ -30,6 +31,7 @@ height_est = (vinit.y**2)/(2*data.gravity)
 #Create golf ball and set initial velocity
 golf=Ball(5,0,data.dragcoef)
 golf.addvel(vinit)
+golf.w = winit
 
 #Make golf ball
 golf_ball=Circle(Point(golf.x+golf.vradius,golf.y-golf.vradius),golf.vradius)
