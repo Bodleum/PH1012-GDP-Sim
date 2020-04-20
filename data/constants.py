@@ -18,6 +18,7 @@ golf_ball_mass = 0.05 # Mass of golf ball in kg
 golf_ball_radius = 0.02 # Radius of golfball in m
 dragcoef = 0.47 # Drag coefficient of golf ball, larger means more air resistance, 0 is no air resistance
 liftcoef = (2.5/3.5)*dragcoef
+cor = 0.3 # Possibly temporary
 
 
 # Location
