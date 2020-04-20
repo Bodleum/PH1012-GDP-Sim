@@ -86,4 +86,7 @@ class Ball:
 
         #Air resistance
         self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
+
+        # Spin
+        self.addaccel(Vector("Spin_lift",(0.5*data.liftcoef*data.airdens*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass,(self.wind_rel.degangle+90)))
         
