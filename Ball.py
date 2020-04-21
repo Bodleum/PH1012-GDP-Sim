@@ -37,9 +37,6 @@ class Ball:
         # Wind
         self.wind_rel = None
 
-        # Spin
-        self.w = None
-
     def addvel(self,vel2):
         self.vel_dict[vel2.name] = vel2
 
@@ -98,7 +95,6 @@ class Ball:
         
 
     def bounce(self):
-        print("Bounce")
         if data.cor*self.inst_vel.mag >= 2:
             self.y = data.ground_height + 0.5
             temp = Vector("Bounce_velocity",data.cor*self.inst_vel.mag,-1*self.inst_vel.degangle)
@@ -110,7 +106,6 @@ class Ball:
             self.inst_vel.mag = 0
 
     def roll(self):
-        print("Roll")
         temp = Vector("Roll",1,0)
         self.inst_vel = None
         self.vel_dict = {}
