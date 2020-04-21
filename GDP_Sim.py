@@ -72,6 +72,10 @@ def simulate(draw,tstep):
         range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
         range_display.setFill(color_rgb(0,0,0))
 
+        # Max height display
+        max_height_display = Text(Point(1100,275),"Max Height: ")
+        max_height_display.setFill(color_rgb(0,0,0))
+
         # Wind arrow
         wind_arrow = Line(Point(1100,200),Point((1100-5*Wind.wind.x),(200+5*Wind.wind.y)))
         wind_arrow.setWidth(1)
@@ -85,9 +89,6 @@ def simulate(draw,tstep):
         #draw tee
         tee.draw(window)
 
-        #draw ground
-        ground.draw(window)
-
         #draw clouds
         for i in clouds:
             i.draw(window)
@@ -97,18 +98,22 @@ def simulate(draw,tstep):
         for i in flags:
                 i.draw(window)
 
+        #draw golf ball
+        golf_ball.draw(window)
+
+        #draw ground
+        ground.draw(window)
+
         # Draw Location text
         loc_text.draw(window)
 
-        #Draw range display
+        #Draw range and max height0 displays
         range_display.draw(window)
+        max_height_display.draw(window)
 
         # Draw wind arrow
         wind_arrow.draw(window)
         wind_text.draw(window)
-
-        #draw golf ball
-        golf_ball.draw(window)
 
     def main_loop():
 
@@ -125,10 +130,10 @@ def simulate(draw,tstep):
             if golf.y <= data.ground_height and roll == False:
                 golf.bounce()
             
-            if golf.inst_vel.mag <= 0.5 and roll == False:
+            if golf.inst_vel.mag <= 1 and roll == False:
                 roll = True
                 golf.roll()
-            elif golf.inst_vel.mag <= 0.5 and roll == True:
+            elif golf.inst_vel.mag <= 1 and roll == True:
                 model = False
 
             if (data.distance_scale*golf.x) < 1000:
@@ -150,8 +155,9 @@ def simulate(draw,tstep):
                 #Move cloud
                 for i in clouds:
                     i.move(-1*Wind.wind.x*tstep, Wind.wind.y*tstep + (random.uniform(-0.05, 0.05)))
-                #Update range displays
-                range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
+                #Update range and height displays
+                range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m") #-5
+                max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
         print("Done")
         print("Golf ball traveled:",round(golf.x-5,3),"m")

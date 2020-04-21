@@ -21,6 +21,7 @@ class Ball:
 
         #y
         self.y = y0 + (data.ground_height)
+        self.y_max = y0 - data.ground_height
 
         #Air resistance
         self.drag = dragcoef
@@ -69,6 +70,8 @@ class Ball:
         #Position
         self.x += self.xinc
         self.y += self.yinc
+        if self.y_max < (self.y-data.ground_height):
+            self.y_max = self.y - data.ground_height
 
         # Wind
         self.wind_rel = Vector("Wind_rel",self.inst_vel.mag,self.inst_vel.degangle)
@@ -95,14 +98,14 @@ class Ball:
         
 
     def bounce(self):
-        if data.cor*self.inst_vel.mag >= 2:
+        if data.cor*self.inst_vel.mag >= 1:
             self.y = data.ground_height + 0.5
             temp = Vector("Bounce_velocity",data.cor*self.inst_vel.mag,-1*self.inst_vel.degangle)
             self.inst_vel=None
             self.vel_dict = {}
             self.addvel(temp)
             self.inst_vel = temp
-        elif self.inst_vel.mag < 2:
+        elif self.inst_vel.mag < 1:
             self.inst_vel.mag = 0
 
     def roll(self):
