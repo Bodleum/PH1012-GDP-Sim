@@ -86,8 +86,11 @@ wind_arrow.setArrow("last")
 wind_text = Text(Point(1100,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
 
 def main_loop():
+
+    model = True
+    roll = False
     #Moving
-    while (golf.y)>=(data.ground_height):
+    while model == True: #(golf.y)>=(data.ground_height) and (golf.inst_vel == None) or (golf.inst_vel.mag != 0):
 
         #Move cloud
         for i in clouds:
@@ -95,6 +98,16 @@ def main_loop():
         
         #Move golfball
         golf.update(tstep)
+
+        if golf.y <= data.ground_height and roll == False:
+            golf.bounce()
+        
+        if golf.inst_vel.mag <= 0.5 and roll == False:
+            roll = True
+            golf.roll()
+        elif golf.inst_vel.mag <= 0.5 and roll == True:
+            model = False
+
         if (data.distance_scale*golf.x) < 1000:
             scroll = False
         elif (data.distance_scale*golf.x) >= 1000:
@@ -111,10 +124,12 @@ def main_loop():
         
 
         #Update range displays
-        range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m")
+        range_display.setText("Distance: "+str(int(round(golf.inst_vel.mag,3)))+"m") #-5
 
     print("Done")
     print("Golf ball traveled:",round(golf.x-5,3),"m")
+
+    Text(Point(1100,300),"Landed").draw(window)
 
     #Close window
     window.getMouse()
