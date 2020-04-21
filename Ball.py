@@ -10,7 +10,7 @@ class Ball:
 
         #Mass and weight
         self.mass = data.golf_ball_mass
-        self.weight = -1*self.mass*data.gravity
+        self.weight = self.mass*data.gravity
 
         #Radius and volume
         self.radius = data.golf_ball_radius
@@ -81,12 +81,39 @@ class Ball:
         self.inst_accel = None
         self.accel_dict = {}
 
-        #Gravity
-        self.addaccel(Vector("Gravity", data.gravity, -90))
+        if self.y > data.ground_height+1:
+            #Gravity
+            self.addaccel(Vector("Gravity", data.gravity, -90))
 
-        #Air resistance
-        self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
+            #Air resistance
+            self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
 
-        # Spin
-        self.addaccel(Vector("Spin_lift",(0.5*data.liftcoef*data.airdens*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass,(self.wind_rel.degangle+90)))
+            # Spin
+            self.addaccel(Vector("Spin_lift",(0.5*data.liftcoef*data.airdens*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass,(self.wind_rel.degangle+90)))
+
+        # Roll friction
+        if self.y <= data.ground_height+1:
+            self.addaccel(Vector("Ground_friction",data.gravity*data.friccoef,self.inst_vel.degangle - 180))
+            round(self.inst_vel.mag,3)
         
+
+    def bounce(self):
+        print("Bounce")
+        if data.cor*self.inst_vel.mag >= 2:
+            self.y = data.ground_height + 0.5
+            temp = Vector("Bounce_velocity",data.cor*self.inst_vel.mag,-1*self.inst_vel.degangle)
+            self.inst_vel=None
+            self.vel_dict = {}
+            self.addvel(temp)
+            self.inst_vel = temp
+        elif self.inst_vel.mag < 2:
+            self.inst_vel.mag = 0
+
+    def roll(self):
+        print("Roll")
+        temp = Vector("Roll",1,0)
+        self.inst_vel = None
+        self.vel_dict = {}
+        self.addvel(temp)
+        self.inst_vel = temp
+        self.y = data.ground_height
