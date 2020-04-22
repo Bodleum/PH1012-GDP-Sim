@@ -3,7 +3,7 @@ import numpy as np
 # Angle sweep
 sweep_start = 5 # Angle to start sweep at in degrees
 sweep_end = 30 # Angle to end sweep at in degrees
-sweep_step = 1 # Angl sweep step in degrees
+sweep_step = 0.01 # Angl sweep step in degrees
 
 # Visual
 radius_scale = 150 # Multiplier to artificially inflate the golf ball's size, bigger means larger ball

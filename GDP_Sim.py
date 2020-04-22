@@ -195,7 +195,7 @@ def simulate(draw,tstep,results,vinit,location):
                 range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m") #-5
                 max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
-        # print("Done",ang_init)
+        print("Done",ang_init)
         results[golf.x - 5] = ang_init
 
         os.remove("./logs/golf_ball_points.csv")
