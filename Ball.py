@@ -6,11 +6,18 @@ from Vector import *
 import Wind
 
 class Ball:
-    def __init__(self, x0, y0,dragcoef):
+    def __init__(self, x0, y0,dragcoef,location):
+
+        self.loc = location
 
         #Mass and weight
         self.mass = data.golf_ball_mass
-        self.weight = self.mass*data.gravity
+        if self.loc == "St Andrews":
+            self.weight = self.mass*data.st_gravity
+        elif self.loc == "La Paz":
+            self.weight = self.mass*data.lp_gravity
+        elif self.loc == "Singapore":
+            self.weight = self.mass*data.s_gravity
 
         #Radius and volume
         self.radius = data.golf_ball_radius
@@ -33,7 +40,12 @@ class Ball:
         #Acceleration
         self.inst_accel = None
         self.accel_dict={}
-        self.addaccel(Vector("Gravity", data.gravity, -90))
+        if self.loc == "St Andrews":
+            self.addaccel(Vector("Gravity", data.st_gravity, -90))
+        elif self.loc == "La Paz":
+            self.addaccel(Vector("Gravity", data.lp_gravity, -90))
+        elif self.loc == "Singapore":
+            self.addaccel(Vector("Gravity", data.s_gravity, -90))
 
         # Wind
         self.wind_rel = None
@@ -75,7 +87,12 @@ class Ball:
 
         # Wind
         self.wind_rel = Vector("Wind_rel",self.inst_vel.mag,self.inst_vel.degangle)
-        self.wind_rel.add(Wind.wind)
+        if self.loc == "St Andrews":
+            self.wind_rel.add(Wind.st_wind)
+        elif self.loc == "La Paz":
+            self.wind_rel.add(Wind.lp_wind)
+        elif self.loc == "Singapore":
+            self.wind_rel.add(Wind.s_wind)
 
         #Reset acceleration
         self.inst_accel = None
@@ -83,17 +100,46 @@ class Ball:
 
         if self.y > data.ground_height+1:
             #Gravity
-            self.addaccel(Vector("Gravity", data.gravity, -90))
+            if self.loc == "St Andrews":
+                self.addaccel(Vector("Gravity", data.st_gravity, -90))
+            elif self.loc == "La Paz":
+                self.addaccel(Vector("Gravity", data.lp_gravity, -90))
+            elif self.loc == "Singapore":
+                self.addaccel(Vector("Gravity", data.s_gravity, -90))
+            
 
             #Air resistance
-            self.addaccel(Vector("Air_resistance", ((data.airdens*self.drag * 0.5*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
+            if self.loc == "St Andrews":
+                self.addaccel(Vector("Air_resistance", ((data.st_airdens*self.drag * 0.5*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
+            elif self.loc == "La Paz":
+                self.addaccel(Vector("Air_resistance", ((data.lp_airdens*self.drag * 0.5*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
+            elif self.loc == "Singapore":
+                self.addaccel(Vector("Air_resistance", ((data.s_airdens*self.drag * 0.5*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass), (self.wind_rel.degangle-180)))
 
             # Spin
-            self.addaccel(Vector("Spin_lift",(0.5*data.liftcoef*data.airdens*(np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass,(self.wind_rel.degangle+90)))
+            if self.loc == "St Andrews":
+                self.addaccel(Vector("Spin_lift", (0.5*data.liftcoef*data.st_airdens*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass, (self.wind_rel.degangle+90)))
+            elif self.loc == "La Paz":
+                self.addaccel(Vector("Spin_lift",(0.5*data.liftcoef*data.lp_airdens*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass,(self.wind_rel.degangle+90)))
+            elif self.loc == "Singapore":
+                self.addaccel(Vector("Spin_lift", (0.5*data.liftcoef*data.s_airdens*(
+                    np.pi*self.radius**2)*self.wind_rel.mag**2)/self.mass, (self.wind_rel.degangle+90)))
 
         # Roll friction
         if self.y <= data.ground_height+1:
-            self.addaccel(Vector("Ground_friction",data.gravity*data.friccoef,self.inst_vel.degangle - 180))
+            if self.loc == "St Andrews":
+                self.addaccel(Vector("Ground_friction",data.st_gravity*data.friccoef,self.inst_vel.degangle - 180))
+            elif self.loc == "La Paz":
+                self.addaccel(Vector("Ground_friction",data.lp_gravity*data.friccoef,self.inst_vel.degangle - 180))
+            elif self.loc == "Singapore":
+                self.addaccel(Vector("Ground_friction",data.s_gravity*data.friccoef,self.inst_vel.degangle - 180))
+            
+            
             round(self.inst_vel.mag,3)
         
 

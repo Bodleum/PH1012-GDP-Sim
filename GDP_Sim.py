@@ -9,7 +9,11 @@ import data.constants as data
 from Vector import *
 import Wind
 
-results = {}
+# Location
+location = "St Andrews"  # St Andrews, Singapore or La Paz
+
+st_results = {}
+
 if input("Draw? (y/n) --> ") == "y":
     draw = True
 else:
@@ -22,14 +26,14 @@ else:
 
 tstep = 0.0075
 
-def simulate(draw,tstep,results,vinit):
+def simulate(draw,tstep,results,vinit,location):
     # Save initial angle
     ang_init = vinit.degangle
     #List of objects in display
     disp_obj=[]
 
     #Create golf ball and set initial velocity
-    golf=Ball(5,0,data.dragcoef)
+    golf=Ball(5,0,data.dragcoef,location)
     golf.addvel(vinit)
 
     if draw == True:
@@ -72,7 +76,7 @@ def simulate(draw,tstep,results,vinit):
             disp_obj.append(text_i)
 
         # Location text
-        loc_text = Text(Point(1000,100),data.location)
+        loc_text = Text(Point(1000,100),location)
         loc_text.setFill(color_rgb(0,0,0))
 
         #Range text
@@ -84,10 +88,25 @@ def simulate(draw,tstep,results,vinit):
         max_height_display.setFill(color_rgb(0,0,0))
 
         # Wind arrow
-        wind_arrow = Line(Point(1000,200),Point((1000-5*Wind.wind.x),(200+5*Wind.wind.y)))
+        if location == "St Andrews":
+            wind_arrow = Line(Point(1000, 200), Point(
+                (1000-5*Wind.st_wind.x), (200+5*Wind.st_wind.y)))
+            wind_text = Text(Point(1000, 165),
+                             ("Wind:", round(Wind.st_wind.mag, 2), "m/s"))
+        elif location == "La Paz":
+            wind_arrow = Line(Point(1000, 200), Point(
+                (1000-5*Wind.lp_wind.x), (200+5*Wind.lp_wind.y)))
+            wind_text = Text(Point(1000, 165),
+                            ("Wind:", round(Wind.lp_wind.mag, 2), "m/s"))
+        elif location == "Singapore":
+            wind_arrow = Line(Point(1000, 200), Point(
+                (1000-5*Wind.s_wind.x), (200+5*Wind.s_wind.y)))
+            wind_text = Text(Point(1000, 165),
+                            ("Wind:", round(Wind.s_wind.mag, 2), "m/s"))
+        
         wind_arrow.setWidth(1)
         wind_arrow.setArrow("last")
-        wind_text = Text(Point(1000,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
+        
 
         #make window
         window = GraphWin("Golf Simulation", data.window_x, data.window_y)
@@ -161,12 +180,21 @@ def simulate(draw,tstep,results,vinit):
             
                 #Move cloud
                 for i in clouds:
-                    i.move(-1*Wind.wind.x*tstep, Wind.wind.y*tstep + (random.uniform(-0.05, 0.05)))
+                    if location == "St Andrews":
+                        i.move(-1*Wind.st_wind.x*tstep, Wind.st_wind.y *
+                               tstep + (random.uniform(-0.05, 0.05)))
+                    elif location == "La Paz":
+                        i.move(-1*Wind.lp_wind.x*tstep, Wind.lp_wind.y *
+                                tstep + (random.uniform(-0.05, 0.05)))
+                    elif location == "Singapore":
+                        i.move(-1*Wind.s_wind.x*tstep, Wind.s_wind.y *
+                               tstep + (random.uniform(-0.05, 0.05)))
+                    
                 #Update range and height displays
                 range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m") #-5
                 max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
-        print("Done",ang_init)
+        # print("Done",ang_init)
         results[golf.x - 5] = ang_init
 
         if draw == True:
@@ -184,7 +212,7 @@ def dosweep(draw,tstep,results):
     for i in np.arange(data.sweep_start,data.sweep_end + 1,data.sweep_step):
         i = round(i,4)
         vinit = Vector("Vinit",data.hit_vel,i)
-        simulate(draw,tstep,results,vinit)
+        simulate(draw,tstep,results,vinit,location)
 
 
 
@@ -194,19 +222,22 @@ if sweep == False:
     v0 = float(input("Initial v? --> "))
     degangle = float(input("Angle? --> "))
     vinit = Vector("Vinit", v0, degangle)
-    simulate(draw, tstep, results, vinit)
-    print(results)
+    simulate(draw, tstep, st_results, vinit, location)
+    print(st_results)
 else:
-    dosweep(draw,tstep,results)
+    dosweep(draw,tstep,st_results)
 
     # top_3 = sorted(results.keys(),reverse=True)[:3]
 
     # print("----- Results -----")
     # for i,j in results.items():
     #     print("At",j,"degrees the golf ball traveled",round(i,5),"m.")
-    print("----- Summary -----")
+    print("----- Summary ("+str(location)+") -----")
     print("Top 3:")
-    print("    1.",round(max(results.keys()),5),"m at",results[max(results.keys())],"degrees.")
-    print("    2.", round(sorted(results.keys(), reverse=True)[1:2][0], 5), "m at", results[sorted(results.keys(), reverse=True)[1:2][0]],"degrees.")
-    print("    3.", round(sorted(results.keys(), reverse=True)[2:3][0], 5), "m at", results[sorted(results.keys(), reverse=True)[2:3][0]], "degrees.")
+    print("    1.",round(max(st_results.keys()),5),"m at",st_results[max(st_results.keys())],"degrees.")
+    print("    2.", round(sorted(st_results.keys(), reverse=True)[1:2][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[1:2][0]],"degrees.")
+    print("    3.", round(sorted(st_results.keys(), reverse=True)[2:3][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[2:3][0]], "degrees.")
 
+# if self.loc == "St Andrews":
+# elif self.loc == "La Paz":
+# elif self.loc == "Singapore":

@@ -2,7 +2,7 @@ import numpy as np
 
 # Angle sweep
 sweep_start = 5 # Angle to start sweep at in degrees
-sweep_end = 45 # Angle to end sweep at in degrees
+sweep_end = 30 # Angle to end sweep at in degrees
 sweep_step = 1 # Angl sweep step in degrees
 
 # Visual
@@ -23,32 +23,37 @@ cor = 0.3 # Possibly temporary
 friccoef = 0.5
 hit_vel = 60 # Initial golf velocity in m/s
 
-# Location
-location = "Singapore" # St Andrews, Singapore or La Paz
 
 # Air density
-if location == "St Andrews":
-    altitude = 0  # Altutide in m
-    temperature = 14.7  # Temperature in Celcius
-    wind_avg = 5  # Average wind speed in m/s
-    gravity = 9.81  # in m/s^2
-elif location == "La Paz":
-    altitude = 3640  # Altutide in m
-    temperature = 8.5  # Temperature in Celcius
-    wind_avg = 4  # Average wind speed in m/s
-    gravity = 9.8  # in m/s^2
-elif location == "Singapore":
-    altitude = 0  # Altutide in m
-    temperature = 26.1  # Temperature in Celcius
-    wind_avg = 3  # Average wind speed in m/s
-    gravity = 9.81  # in m/s^2
+
+st_altitude = 0  # Altutide in m
+st_temperature = 14.7  # Temperature in Celcius
+st_wind_avg = 5  # Average wind speed in m/s
+st_gravity = 9.81  # in m/s^2
+
+lp_altitude = 3640  # Altutide in m
+lp_temperature = 8.5  # Temperature in Celcius
+lp_wind_avg = 400  # Average wind speed in m/s
+lp_gravity = 9.8  # in m/s^2
+
+s_altitude = 0  # Altutide in m
+s_temperature = 26.1  # Temperature in Celcius
+s_wind_avg = 3  # Average wind speed in m/s
+s_gravity = 9.81  # in m/s^2
 #Calculation
 P_0 = 101325 # Standard atmospheric pressure in Pa
 R = 287.058 # Specific gas constant for air in J/kgK
 air_molecule_mass = 29 # Mass of one air molecule in amu
 boltzmann = 1.38e-23 # Boltzmann constant
-P_h = P_0*np.e**((-(air_molecule_mass*1.66e-27)*gravity*altitude)/(boltzmann*(temperature+273.15)))
-airdens = P_h/(R*(temperature + 273.15))
+
+st_P_h = P_0*np.e**((-(air_molecule_mass*1.66e-27)*st_gravity*st_altitude)/(boltzmann*(st_temperature+273.15)))
+st_airdens = st_P_h/(R*(st_temperature + 273.15))
+
+lp_P_h = P_0*np.e**((-(air_molecule_mass*1.66e-27)*lp_gravity*lp_altitude)/(boltzmann*(lp_temperature+273.15)))
+lp_airdens = lp_P_h/(R*(lp_temperature + 273.15))
+
+s_P_h = P_0*np.e**((-(air_molecule_mass*1.66e-27)*s_gravity*s_altitude)/(boltzmann*(s_temperature+273.15)))
+s_airdens = s_P_h/(R*(s_temperature + 273.15))
 
 
 # Wind
