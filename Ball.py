@@ -30,6 +30,8 @@ class Ball:
         self.y = y0 + (data.ground_height)
         self.y_max = y0 - data.ground_height
 
+        self.points = []
+
         #Air resistance
         self.drag = dragcoef
 
@@ -84,6 +86,8 @@ class Ball:
         self.y += self.yinc
         if self.y_max < (self.y-data.ground_height):
             self.y_max = self.y - data.ground_height
+        
+        self.points.append([round(self.x-5,3),round(self.y-data.ground_height,3)])
 
         # Wind
         self.wind_rel = Vector("Wind_rel",self.inst_vel.mag,self.inst_vel.degangle)

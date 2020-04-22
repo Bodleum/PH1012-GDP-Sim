@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import random
+import os
 
 from data.graphics_engine import GraphWin,color_rgb,Circle,Rectangle,Point,Image,Text,Line
 
@@ -197,6 +198,12 @@ def simulate(draw,tstep,results,vinit,location):
         # print("Done",ang_init)
         results[golf.x - 5] = ang_init
 
+        os.remove("./logs/golf_ball_points.csv")
+        points_file = open("./logs/golf_ball_points.csv","a")
+        for i in range(0,len(golf.points)):
+            points_file.write(str(golf.points[i][0])+","+str(golf.points[i][1])+"\n")
+        points_file.close()
+
         if draw == True:
             Text(Point(1000,300),"Landed").draw(window)
 
@@ -224,6 +231,7 @@ if sweep == False:
     vinit = Vector("Vinit", v0, degangle)
     simulate(draw, tstep, st_results, vinit, location)
     print(st_results)
+
 else:
     dosweep(draw,tstep,st_results)
 
@@ -237,7 +245,6 @@ else:
     print("    1.",round(max(st_results.keys()),5),"m at",st_results[max(st_results.keys())],"degrees.")
     print("    2.", round(sorted(st_results.keys(), reverse=True)[1:2][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[1:2][0]],"degrees.")
     print("    3.", round(sorted(st_results.keys(), reverse=True)[2:3][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[2:3][0]], "degrees.")
-
 # if self.loc == "St Andrews":
 # elif self.loc == "La Paz":
 # elif self.loc == "Singapore":
