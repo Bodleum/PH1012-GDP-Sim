@@ -14,17 +14,19 @@ if input("Draw? (y/n) --> ") == "y":
     draw = True
 else:
     draw = False
-    
+
+if input("Angle sweep? (y/n) --> ") == "y":
+    sweep = True
+else:
+    sweep = False
+
 tstep = 0.0075
 
-def simulate(draw,tstep,results):
+def simulate(draw,tstep,results,vinit):
+    # Save initial angle
+    ang_init = vinit.degangle
     #List of objects in display
     disp_obj=[]
-
-    #Initial velocity
-    v0 = float(input("Initial v? --> "))
-    degangle = float(input("Angle? --> "))
-    vinit = Vector("Vinit", v0, degangle)
 
     #Create golf ball and set initial velocity
     golf=Ball(5,0,data.dragcoef)
@@ -164,17 +166,47 @@ def simulate(draw,tstep,results):
                 range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m") #-5
                 max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
-        print("Done")
-        results[degangle] = golf.x - 5
+        print("Done",ang_init)
+        results[golf.x - 5] = ang_init
 
         if draw == True:
             Text(Point(1000,300),"Landed").draw(window)
 
             #Close window
-            window.getMouse()
+            if sweep == False:
+                window.getMouse()
             window.close()
 
     main_loop()
 
-simulate(draw,tstep,results)
-print(results)
+
+def dosweep(draw,tstep,results):
+    for i in np.arange(data.sweep_start,data.sweep_end + 1,data.sweep_step):
+        i = round(i,4)
+        vinit = Vector("Vinit",data.hit_vel,i)
+        simulate(draw,tstep,results,vinit)
+
+
+
+
+if sweep == False:
+    #Initial velocity
+    v0 = float(input("Initial v? --> "))
+    degangle = float(input("Angle? --> "))
+    vinit = Vector("Vinit", v0, degangle)
+    simulate(draw, tstep, results, vinit)
+    print(results)
+else:
+    dosweep(draw,tstep,results)
+
+    # top_3 = sorted(results.keys(),reverse=True)[:3]
+
+    # print("----- Results -----")
+    # for i,j in results.items():
+    #     print("At",j,"degrees the golf ball traveled",round(i,5),"m.")
+    print("----- Summary -----")
+    print("Top 3:")
+    print("    1.",round(max(results.keys()),5),"m at",results[max(results.keys())],"degrees.")
+    print("    2.", round(sorted(results.keys(), reverse=True)[1:2][0], 5), "m at", results[sorted(results.keys(), reverse=True)[1:2][0]],"degrees.")
+    print("    3.", round(sorted(results.keys(), reverse=True)[2:3][0], 5), "m at", results[sorted(results.keys(), reverse=True)[2:3][0]], "degrees.")
+

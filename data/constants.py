@@ -1,5 +1,10 @@
 import numpy as np
 
+# Angle sweep
+sweep_start = 5 # Angle to start sweep at in degrees
+sweep_end = 45 # Angle to end sweep at in degrees
+sweep_step = 1 # Angl sweep step in degrees
+
 # Visual
 radius_scale = 150 # Multiplier to artificially inflate the golf ball's size, bigger means larger ball
                    # VISUAL ONLY
@@ -16,6 +21,7 @@ dragcoef = 0.47 # Drag coefficient of golf ball, larger means more air resistanc
 liftcoef = (2.5/3.5)*dragcoef
 cor = 0.3 # Possibly temporary
 friccoef = 0.5
+hit_vel = 60 # Initial golf velocity in m/s
 
 # Location
 location = "Singapore" # St Andrews, Singapore or La Paz
