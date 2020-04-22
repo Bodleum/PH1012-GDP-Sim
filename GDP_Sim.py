@@ -10,8 +10,11 @@ from Vector import *
 import Wind
 
 results = {}
-
-draw = True
+if input("Draw? (y/n) --> ") == "y":
+    draw = True
+else:
+    draw = False
+    
 tstep = 0.0075
 
 def simulate(draw,tstep,results):
