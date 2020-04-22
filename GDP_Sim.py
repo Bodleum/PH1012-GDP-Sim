@@ -65,22 +65,22 @@ def simulate(draw,tstep):
             disp_obj.append(text_i)
 
         # Location text
-        loc_text = Text(Point(1100,100),data.location)
+        loc_text = Text(Point(1000,100),data.location)
         loc_text.setFill(color_rgb(0,0,0))
 
         #Range text
-        range_display = Text(Point(1100,250),"Distance: ")#+str(golf.x-5))
+        range_display = Text(Point(1000,250),"Distance: ")#+str(golf.x-5))
         range_display.setFill(color_rgb(0,0,0))
 
         # Max height display
-        max_height_display = Text(Point(1100,275),"Max Height: ")
+        max_height_display = Text(Point(1000,275),"Max Height: ")
         max_height_display.setFill(color_rgb(0,0,0))
 
         # Wind arrow
-        wind_arrow = Line(Point(1100,200),Point((1100-5*Wind.wind.x),(200+5*Wind.wind.y)))
+        wind_arrow = Line(Point(1000,200),Point((1000-5*Wind.wind.x),(200+5*Wind.wind.y)))
         wind_arrow.setWidth(1)
         wind_arrow.setArrow("last")
-        wind_text = Text(Point(1100,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
+        wind_text = Text(Point(1000,165),("Wind:",round(Wind.wind.mag,2),"m/s"))
 
         #make window
         window = GraphWin("Golf Simulation", data.window_x, data.window_y)
@@ -93,16 +93,16 @@ def simulate(draw,tstep):
         for i in clouds:
             i.draw(window)
 
-        #Draw Flags
-        tee_text.draw(window)
-        for i in flags:
-                i.draw(window)
-
         #draw golf ball
         golf_ball.draw(window)
 
         #draw ground
         ground.draw(window)
+
+        #Draw Flags
+        tee_text.draw(window)
+        for i in flags:
+            i.draw(window)
 
         # Draw Location text
         loc_text.draw(window)
@@ -163,7 +163,7 @@ def simulate(draw,tstep):
         print("Golf ball traveled:",round(golf.x-5,3),"m")
 
         if draw == True:
-            Text(Point(1100,300),"Landed").draw(window)
+            Text(Point(1000,300),"Landed").draw(window)
 
             #Close window
             window.getMouse()

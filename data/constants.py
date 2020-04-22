@@ -45,6 +45,15 @@ P_h = P_0*np.e**((-(air_molecule_mass*1.66e-27)*gravity*altitude)/(boltzmann*(te
 airdens = P_h/(R*(temperature + 273.15))
 
 
+# Wind
+random_wind = True # Set false to manually set wind values
+
+# SET random_wind TO FALSE TO USE THESE
+# THESE WILL BE OVERWRITTEN IF random_wind IS TRUE
+fixed_wind_mag = 5 # Magnitude of wind in m/s
+fixed_wind_angle = 10 # Angle of the wind in degrees, measured anticlockwise from the x axis
+
+
 # Scene
 window_x=1200 # Length of window in pixels
 window_y=700 # Height of window in pixels
