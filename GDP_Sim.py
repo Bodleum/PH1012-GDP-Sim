@@ -9,10 +9,12 @@ import data.constants as data
 from Vector import *
 import Wind
 
+results = {}
+
 draw = True
 tstep = 0.0075
 
-def simulate(draw,tstep):
+def simulate(draw,tstep,results):
     #List of objects in display
     disp_obj=[]
 
@@ -160,7 +162,7 @@ def simulate(draw,tstep):
                 max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
         print("Done")
-        print("Golf ball traveled:",round(golf.x-5,3),"m")
+        results[degangle] = golf.x - 5
 
         if draw == True:
             Text(Point(1000,300),"Landed").draw(window)
@@ -171,4 +173,5 @@ def simulate(draw,tstep):
 
     main_loop()
 
-simulate(draw,tstep)
+simulate(draw,tstep,results)
+print(results)
