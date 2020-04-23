@@ -58,7 +58,7 @@ class Ball:
     def addaccel(self,accel2):
         self.accel_dict[accel2.name] = accel2
 
-    def update(self, tstep):
+    def update(self, tstep, wind):
 
         #Lists
         self.accel_list = list(self.accel_dict.values())
@@ -92,11 +92,11 @@ class Ball:
         # Wind
         self.wind_rel = Vector("Wind_rel",self.inst_vel.mag,self.inst_vel.degangle)
         if self.loc == "St Andrews":
-            self.wind_rel.add(Wind.st_wind)
+            self.wind_rel.add(wind)
         elif self.loc == "La Paz":
-            self.wind_rel.add(Wind.lp_wind)
+            self.wind_rel.add(wind)
         elif self.loc == "Singapore":
-            self.wind_rel.add(Wind.s_wind)
+            self.wind_rel.add(wind)
 
         #Reset acceleration
         self.inst_accel = None

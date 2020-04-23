@@ -1,7 +1,7 @@
 import numpy as np
 
 # Angle sweep
-sweep_start = 5 # Angle to start sweep at in degrees
+sweep_start = 10 # Angle to start sweep at in degrees
 sweep_end = 30 # Angle to end sweep at in degrees
 sweep_step = 0.01 # Angl sweep step in degrees
 
@@ -33,7 +33,7 @@ st_gravity = 9.81  # in m/s^2
 
 lp_altitude = 3640  # Altutide in m
 lp_temperature = 8.5  # Temperature in Celcius
-lp_wind_avg = 400  # Average wind speed in m/s
+lp_wind_avg = 4  # Average wind speed in m/s
 lp_gravity = 9.8  # in m/s^2
 
 s_altitude = 0  # Altutide in m

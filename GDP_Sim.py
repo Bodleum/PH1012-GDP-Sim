@@ -10,10 +10,52 @@ import data.constants as data
 from Vector import *
 import Wind
 
-# Location
-location = "St Andrews"  # St Andrews, Singapore or La Paz
+q = 0
+tops = []
+location = "Singapore"
+
+if location == "St Andrews":
+    try:
+        os.remove("./logs/st_tops.csv")
+    except Exception:
+        pass
+    output = open("./logs/st_tops.csv","a")
+elif location == "La Paz":
+    try:
+        os.remove("./logs/lp_tops.csv")
+    except Exception:
+        pass
+    output = open("./logs/lp_tops.csv","a")
+elif location == "Singapore":
+    try:
+        os.remove("./logs/s_tops.csv")
+    except Exception:
+        pass
+    output = open("./logs/s_tops.csv","a")
+
+output.write("Angle,Range,Max Height\n")
+
 
 st_results = {}
+
+if data.random_wind == True:
+
+    def pm():
+        return 180 if random.random() < 0.5 else 0
+
+    if location == "St Andrews":
+        wind = Vector("Wind", np.random.normal(
+            data.st_wind_avg, 1), random.uniform(-35, 35)-pm())
+    elif location == "La Paz":
+        wind = Vector("Wind", np.random.normal(
+            data.lp_wind_avg, 1), random.uniform(-35, 35)-pm())
+
+    elif location == "Singapore":
+        wind = Vector("Wind", np.random.normal(
+            data.s_wind_avg, 1), random.uniform(-35, 35)-pm())
+else:
+    wind = Vector("Wind", data.fixed_wind_mag, data.fixed_wind_angle + 180)
+
 
 if input("Draw? (y/n) --> ") == "y":
     draw = True
@@ -93,7 +135,7 @@ def simulate(draw,tstep,results,vinit,location):
             wind_arrow = Line(Point(1000, 200), Point(
                 (1000-5*Wind.st_wind.x), (200+5*Wind.st_wind.y)))
             wind_text = Text(Point(1000, 165),
-                             ("Wind:", round(Wind.st_wind.mag, 2), "m/s"))
+                            ("Wind:", round(Wind.st_wind.mag, 2), "m/s"))
         elif location == "La Paz":
             wind_arrow = Line(Point(1000, 200), Point(
                 (1000-5*Wind.lp_wind.x), (200+5*Wind.lp_wind.y)))
@@ -152,7 +194,7 @@ def simulate(draw,tstep,results,vinit,location):
         while model == True: #(golf.y)>=(data.ground_height) and (golf.inst_vel == None) or (golf.inst_vel.mag != 0):
             
             #Move golfball
-            golf.update(tstep)
+            golf.update(tstep,wind)
 
             if golf.y <= data.ground_height and roll == False:
                 golf.bounce()
@@ -183,23 +225,24 @@ def simulate(draw,tstep,results,vinit,location):
                 for i in clouds:
                     if location == "St Andrews":
                         i.move(-1*Wind.st_wind.x*tstep, Wind.st_wind.y *
-                               tstep + (random.uniform(-0.05, 0.05)))
+                            tstep + (random.uniform(-0.05, 0.05)))
                     elif location == "La Paz":
                         i.move(-1*Wind.lp_wind.x*tstep, Wind.lp_wind.y *
                                 tstep + (random.uniform(-0.05, 0.05)))
                     elif location == "Singapore":
                         i.move(-1*Wind.s_wind.x*tstep, Wind.s_wind.y *
-                               tstep + (random.uniform(-0.05, 0.05)))
+                            tstep + (random.uniform(-0.05, 0.05)))
                     
                 #Update range and height displays
                 range_display.setText("Distance: "+str(int(round(golf.x-5,3)))+"m") #-5
                 max_height_display.setText("Max Height: "+str(int(round(golf.y_max, 3)))+"m")
 
-        print("Done",ang_init)
-        results[golf.x - 5] = ang_init
+        print(q + 1,"Done",ang_init)
+        results[golf.x - 5] = [ang_init,golf.y_max]
 
         os.remove("./logs/golf_ball_points.csv")
         points_file = open("./logs/golf_ball_points.csv","a")
+        points_file.write("x,y\n")
         for i in range(0,len(golf.points)):
             points_file.write(str(golf.points[i][0])+","+str(golf.points[i][1])+"\n")
         points_file.close()
@@ -216,7 +259,7 @@ def simulate(draw,tstep,results,vinit,location):
 
 
 def dosweep(draw,tstep,results):
-    for i in np.arange(data.sweep_start,data.sweep_end + 1,data.sweep_step):
+    for i in np.arange(data.sweep_start,data.sweep_end,data.sweep_step):
         i = round(i,4)
         vinit = Vector("Vinit",data.hit_vel,i)
         simulate(draw,tstep,results,vinit,location)
@@ -233,18 +276,23 @@ if sweep == False:
     print(st_results)
 
 else:
-    dosweep(draw,tstep,st_results)
-
+    while q < 20:
+        dosweep(draw,tstep,st_results)
+        q+=1
     # top_3 = sorted(results.keys(),reverse=True)[:3]
 
     # print("----- Results -----")
     # for i,j in results.items():
     #     print("At",j,"degrees the golf ball traveled",round(i,5),"m.")
-    print("----- Summary ("+str(location)+") -----")
+    print("----- Summary",q + 1,"("+str(location)+") -----")
     print("Top 3:")
-    print("    1.",round(max(st_results.keys()),5),"m at",st_results[max(st_results.keys())],"degrees.")
-    print("    2.", round(sorted(st_results.keys(), reverse=True)[1:2][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[1:2][0]],"degrees.")
-    print("    3.", round(sorted(st_results.keys(), reverse=True)[2:3][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[2:3][0]], "degrees.")
-# if self.loc == "St Andrews":
-# elif self.loc == "La Paz":
-# elif self.loc == "Singapore":
+    print("    1.",round(max(st_results.keys()),5),"m at",st_results[max(st_results.keys())][0],"degrees.")
+    print("    2.", round(sorted(st_results.keys(), reverse=True)[1:2][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[1:2][0]][0],"degrees.")
+    print("    3.", round(sorted(st_results.keys(), reverse=True)[2:3][0], 5), "m at", st_results[sorted(st_results.keys(), reverse=True)[2:3][0]][0], "degrees.")
+    tops.append([round(max(st_results.keys()), 5),
+                st_results[max(st_results.keys())]])
+    
+    output.write(
+        str(st_results[max(st_results.keys())][0])+","+str(round(max(st_results.keys()), 5))+","+str(round(st_results[max(st_results.keys())][1], 5))+"\n")
+
+output.close()
